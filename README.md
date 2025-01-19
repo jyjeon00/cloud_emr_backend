@@ -29,7 +29,7 @@ github issue 생성하기<br>
 - feature(기능 개발용)
 
 ## 대분류 패키지 Naming
-- 메인: main    
+- 메인: Main    
   - 메인화면 및 공통 관련 리소스 관리 
 - 원무: Reception
   - 원무 데이터 관리

@@ -10,7 +10,7 @@ public class AuthEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int authId;
+    private Long authId;
 
     @Enumerated(EnumType.STRING)
     private AuthType authName;

@@ -21,7 +21,7 @@ public class UserService {
      */
     public UserEntity registerUser(UserRegisterRequest userRegisterRequest) {
 
-        // 중복 검증: 이메일이나 사용사 계정이 이미 존재하는지 확인
+        // 중복 검증: 이메일이나 사용자 계정이 이미 존재하는지 확인
         if (userRepository.existsByUserLoginId(userRegisterRequest.getUserLoginId())) {
             throw new IllegalArgumentException("이미 사용 중인 계정입니다.");
         }

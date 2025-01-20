@@ -1,9 +1,12 @@
 package com.cloud.emr.Main.entity;
 
+import com.cloud.emr.Main.status.RoleType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -11,15 +14,25 @@ import java.time.LocalDateTime;
 @Entity(name = "User")
 @Builder
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    @Column(name = "user_id")
+    private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "auth_id")
-    private AuthEntity authId;
+    @Column(length = 10)
+    @Enumerated(EnumType.STRING)
+    private RoleType Role;
+
+    //음..? 일단 만들어 다듬어만 드릴게요  - 최경태
+    @Column(name = "user_login_id")
+    private String userLoginId;
+    private String userPassword;
+
+
 
     /*
     @NotNull
@@ -28,8 +41,8 @@ public class UserEntity {
     */
 
     private String userDeptName;
-    private String userLoginId;
-    private String userPassword;
+
+
     private String userName;
     private String userGender;
     private String userAddress;
@@ -41,21 +54,5 @@ public class UserEntity {
     @CreationTimestamp
     private LocalDateTime userRegisterDate;
 
-    public UserEntity getUserEntity() {
-        return UserEntity.builder()
-                .authId(this.authId)
-                // .hospitalCode(this.hospitalCode)
-                .userDeptName(this.userDeptName)
-                .userLoginId(this.userLoginId)
-                .userPassword(this.userPassword)
-                .userName(this.userName)
-                .userGender(this.userGender)
-                .userAddress(this.userAddress)
-                .userEmail(this.userEmail)
-                .userTel(this.userTel)
-                .userBirth(this.userBirth)
-                .userHireDate(this.userHireDate)
-                .build();
-    }
 
 }

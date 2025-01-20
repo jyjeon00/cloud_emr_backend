@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
-public class UserLoginDTO {
+public class UserLoginRequest {
 
     @NotBlank(message = "아이디를 입력해주세요.")
     String userId;

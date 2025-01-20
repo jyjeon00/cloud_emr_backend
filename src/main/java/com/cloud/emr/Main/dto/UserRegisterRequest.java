@@ -1,18 +1,15 @@
 package com.cloud.emr.Main.dto;
 
 import com.cloud.emr.Main.entity.UserEntity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import com.cloud.emr.Main.status.RoleType;
 import jakarta.validation.constraints.*;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 
 import java.time.LocalDate;
 
 @Getter
-public class UserRegisterDTO {
+public class UserRegisterRequest {
 
     /*
     @Enumerated(EnumType.STRING)
@@ -60,7 +57,14 @@ public class UserRegisterDTO {
 
     // userRegisterDate는 엔티티에서 자동으로 생성
 
+    /**
+     * 회원가입을 회원가입을 위한 DTo에서 반환
+     * @author : 전재윤
+     * @exception IllegalArgumentException : 비밀번호와 비밀번호 확인이 일치하지 않을 경우 예외 반환
+     * @return : UserEntity
+     */
     public UserEntity toUserEntity() {
+        // 프론트 단에서 일단 검증 했더라도
         if (!userPassword1.equals(userPassword2)) {
             throw new IllegalArgumentException("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
         }
@@ -68,6 +72,7 @@ public class UserRegisterDTO {
         return UserEntity.builder()
                 // .hospitalCode(this.userHospitalCode)
                 .userDeptName(this.userDepartmentName)
+                .Role(RoleType.WAIT) //우선 WAIT로 진행
                 .userLoginId(this.userLoginId)
                 .userPassword(this.userPassword1) // 비밀번호는 userPassword1을 사용
                 .userName(this.userName)

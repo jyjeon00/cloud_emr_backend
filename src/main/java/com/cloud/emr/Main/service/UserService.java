@@ -1,6 +1,6 @@
 package com.cloud.emr.Main.service;
 
-import com.cloud.emr.Main.dto.UserRegisterDTO;
+import com.cloud.emr.Main.dto.UserRegisterRequest;
 import com.cloud.emr.Main.entity.UserEntity;
 import com.cloud.emr.Main.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +12,22 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public UserEntity registerUser(UserRegisterDTO userRegisterDTO) {
+    /**   중복검증 추가 및 Javadoc 추가해드렸습니다. +최경태
+     * 회원가입
+     * @author : 전재윤
+     * @param userRegisterRequest : 등록 dto
+     * @exception IllegalArgumentException : 중복검증
+     * @return : UserEntity
+     */
+    public UserEntity registerUser(UserRegisterRequest userRegisterRequest) {
+
+        // 중복 검증: 이메일이나 사용사 계정이 이미 존재하는지 확인
+        if (userRepository.existsByUserLoginId(userRegisterRequest.getUserLoginId())) {
+            throw new IllegalArgumentException("이미 사용 중인 계정입니다.");
+        }
+
         // DTO에서 Entity로 변환
-        UserEntity userEntity = userRegisterDTO.toUserEntity();
+        UserEntity userEntity = userRegisterRequest.toUserEntity();
 
         // 데이터베이스에 저장
         return userRepository.save(userEntity);

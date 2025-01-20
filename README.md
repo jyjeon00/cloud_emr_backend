@@ -48,6 +48,8 @@ github issue 생성하기<br>
 - config
 - controller
 - dto
+  - request : 요청하는 DTO
+  - Response : 결과물을 주는 DTO (응답)
 - entity
 - repository
 - service

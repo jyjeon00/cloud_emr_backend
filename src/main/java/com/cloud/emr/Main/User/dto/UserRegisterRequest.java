@@ -1,7 +1,7 @@
-package com.cloud.emr.Main.dto;
+package com.cloud.emr.Main.User.dto;
 
-import com.cloud.emr.Main.entity.UserEntity;
-import com.cloud.emr.Main.status.RoleType;
+import com.cloud.emr.Main.User.entity.UserEntity;
+import com.cloud.emr.Main.User.status.RoleType;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 

@@ -1,8 +1,8 @@
-package com.cloud.emr.Main.controller;
+package com.cloud.emr.Main.User.controller;
 
-import com.cloud.emr.Main.dto.UserLoginRequest;
-import com.cloud.emr.Main.dto.UserRegisterRequest;
-import com.cloud.emr.Main.service.UserService;
+import com.cloud.emr.Main.User.dto.UserLoginRequest;
+import com.cloud.emr.Main.User.dto.UserRegisterRequest;
+import com.cloud.emr.Main.User.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,8 +1,7 @@
-package com.cloud.emr.Main.entity;
+package com.cloud.emr.Main.User.entity;
 
-import com.cloud.emr.Main.status.RoleType;
+import com.cloud.emr.Main.User.status.RoleType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

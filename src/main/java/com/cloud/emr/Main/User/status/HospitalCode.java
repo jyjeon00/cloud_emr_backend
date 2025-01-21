@@ -1,4 +1,4 @@
-package com.cloud.emr.Main.status;
+package com.cloud.emr.Main.User.status;
 
 public enum HospitalCode {
 

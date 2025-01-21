@@ -1,8 +1,8 @@
-package com.cloud.emr.Main.service;
+package com.cloud.emr.Main.User.service;
 
-import com.cloud.emr.Main.dto.UserRegisterRequest;
-import com.cloud.emr.Main.entity.UserEntity;
-import com.cloud.emr.Main.repository.UserRepository;
+import com.cloud.emr.Main.User.dto.UserRegisterRequest;
+import com.cloud.emr.Main.User.entity.UserEntity;
+import com.cloud.emr.Main.User.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

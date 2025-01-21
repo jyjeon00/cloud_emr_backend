@@ -1,4 +1,4 @@
-package com.cloud.emr.Main.dto;
+package com.cloud.emr.Main.User.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

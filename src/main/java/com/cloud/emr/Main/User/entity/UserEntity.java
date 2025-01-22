@@ -54,4 +54,6 @@ public class UserEntity {
     private LocalDateTime userRegisterDate;
 
 
+    public UserEntity(Long userId) {
+    }
 }

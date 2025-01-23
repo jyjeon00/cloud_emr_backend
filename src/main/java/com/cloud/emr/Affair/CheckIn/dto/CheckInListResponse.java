@@ -1,5 +1,8 @@
 package com.cloud.emr.Affair.CheckIn.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,9 +12,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CheckInListResponse {
 
+    @NotNull(message = "접수 ID는 필수 값입니다.")
     private Long checkInId;    // 접수 ID
+
+    @NotBlank(message = "환자번호는 필수 값입니다.")
+    @Size(min = 8, max = 8, message = "환자번호는 반드시 8자리여야 합니다.")
     private String patientNo;  // 환자 번호
+
+    @NotNull(message = "접수 목적은 필수 값입니다.")
+    @Size(max = 500, message = "접수 목적은 최대 500자까지 가능합니다.")
     private String checkInPurpose;  // 접수 목적
+
+    @NotNull(message = "접수한 유저 이름은 필수 값입니다.")
     private String userName;   // 접수한 유저 이름
 
 }

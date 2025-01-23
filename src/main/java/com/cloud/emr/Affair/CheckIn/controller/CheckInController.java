@@ -1,6 +1,5 @@
 package com.cloud.emr.Affair.CheckIn.controller;
 
-import com.cloud.emr.Affair.CheckIn.dto.CheckInCancelRequest;
 import com.cloud.emr.Affair.CheckIn.dto.CheckInListResponse;
 import com.cloud.emr.Affair.CheckIn.dto.CheckInRequest;
 import com.cloud.emr.Affair.CheckIn.entity.CheckInEntity;
@@ -38,11 +37,10 @@ public class CheckInController {
 
     // 1. 접수 등록
     @PostMapping("/register")
-    public ResponseEntity<Object> registerCheckIn(@RequestBody CheckInRequest checkInRequest, @RequestParam Long userId) {
+    public ResponseEntity<Object> registerCheckIn(@RequestParam CheckInRequest checkInRequest, @RequestParam Long userId) {
         try {
-
             // 사용자 조회
-            UserEntity userEntity = findUserById(userId);// findUserById 메서드를 사용하여 유저 정보를 가져옵니다.
+            UserEntity userEntity = findUserById(userId);
             if (userEntity == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "User not found"));
             }
@@ -56,8 +54,20 @@ public class CheckInController {
             // 접수 등록 처리
             CheckInEntity newCheckIn = checkInService.createCheckIn(checkInRequest, userEntity);
 
+            // 응답 데이터 생성 (userId만 포함)
+            Map<String, Object> responseData = Map.of(
+                    "checkInId", newCheckIn.getCheckInId(),
+                    "patientNo", newCheckIn.getPatientNo(),
+                    "userId", userEntity.getUserId(), // userEntity에서 userId만 추출
+                    "checkInDate", newCheckIn.getCheckInDate(),
+                    "checkInPurpose", newCheckIn.getCheckInPurpose()
+            );
+
             // 성공적인 접수 처리
-            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "접수 성공", "data", newCheckIn));
+            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
+                    "message", "접수 성공",
+                    "data", responseData
+            ));
 
         } catch (Exception e) {
             // 예외 처리
@@ -75,27 +85,36 @@ public class CheckInController {
         List<CheckInListResponse> checkInList = checkInService.getCheckInList();
 
         if (checkInList.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("목록에 접수가 없습니다.");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Map.of(
+                    "message", "목록에 접수가 없습니다."
+            ));
         }
 
-        return ResponseEntity.ok(checkInList); // 접수 목록 반환
+        return ResponseEntity.ok(Map.of(
+                "message", "접수 목록 조회 성공",
+                "data", checkInList
+        ));
     }
-
 
     // 3. 접수 취소
     @PostMapping("/cancel")
     public ResponseEntity<Object> cancelCheckIn(@RequestParam Long checkInId) {
         try {
             checkInService.cancelCheckIn(checkInId);  // checkInId를 전달받아 취소 처리
-            return ResponseEntity.ok("접수 취소 완료");
+
+            // 성공적인 취소 처리
+            return ResponseEntity.ok(Map.of(
+                    "message", "접수 취소 완료",
+                    "checkInId", checkInId
+            ));
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("존재하지 않는 접수");
+            // 예외 처리
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
+                    "message", "존재하지 않는 접수",
+                    "error", e.getMessage()
+            ));
         }
     }
-
-
-
-
 
 }
 
@@ -114,8 +133,8 @@ public class CheckInController {
  raw
 
  {
-    "patientNo": "12345678",
-    "checkInPurpose": "정기검진"
+   "patientNo": "N0000001",
+   "checkInPurpose": "정기검진"
  }
 
 ------------------------------------------------------------------------------

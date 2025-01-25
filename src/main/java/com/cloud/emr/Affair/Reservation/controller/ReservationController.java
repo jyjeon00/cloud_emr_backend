@@ -28,12 +28,9 @@ public class ReservationController {
 
     // 1. 환자 예약 (예약은 환자 접수가 되면 사라짐)
 
-
     // 2. 예약 목록 조회
 
-
     // 3. 예약 취소
-
 
     // 4. 예약 변경
 

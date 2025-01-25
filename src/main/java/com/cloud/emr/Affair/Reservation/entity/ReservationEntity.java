@@ -18,10 +18,11 @@ public class ReservationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="reservation_id", nullable = false, columnDefinition = "INT")
     private Long reservationId; // 예약 ID
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "checkIn_Id", referencedColumnName = "checkIn_Id", nullable = false)
+    @JoinColumn(name = "checkIn_Id", referencedColumnName = "checkIn_Id", nullable = false, columnDefinition = "INT")
     private CheckInEntity checkInId; // 접수 ID
 
     @Column(name = "patient_no", nullable = false, length = 8)
@@ -40,4 +41,7 @@ public class ReservationEntity {
 
     @Column(name = "reservation_change_cause", length = 100)
     private String reservationChangeCause; // 예약 변경 사유
+
 }
+
+// length = 20이 varchar(20)이라는 뜻

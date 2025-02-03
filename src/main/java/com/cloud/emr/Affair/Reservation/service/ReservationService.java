@@ -81,12 +81,12 @@ public class ReservationService {
                 .reservationId(reservationEntity.getReservationId())
                 .patientNo(reservationEntity.getPatientNo()) // patientNo는 String 타입으로 그대로 사용
                 .reservationDate(
-                        updateRequest.getNewReservationDate() != null ? updateRequest.getNewReservationDate() : reservationEntity.getReservationDate()
+                        updateRequest.getNewReservationDate() != null ? updateRequest.getNewReservationDate() : reservationEntity.getReservationDate() // 예약 날짜 변경만 할 수도 있음
                 )
                 .reservationYn(
-                        updateRequest.getReservationYn() != null ? updateRequest.getReservationYn() : reservationEntity.getReservationYn()
+                        updateRequest.getReservationYn() != null ? updateRequest.getReservationYn() : reservationEntity.getReservationYn() // 예약 취소만 할 수도 있음
                 )
-                .reservationChangeDate(LocalDateTime.now())  // 현재 시간으로 설정
+                .reservationChangeDate(LocalDateTime.now()) // 예약이 변경될 날짜와 시간 (사용자 입력)
                 .reservationChangeCause(updateRequest.getReservationChangeCause() != null ? updateRequest.getReservationChangeCause() : "예약 변경 사유")  // 변경 사유 (동적으로 설정)
                 .build();
 

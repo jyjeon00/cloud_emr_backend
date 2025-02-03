@@ -47,7 +47,7 @@ public class CheckInService {
     // 3. 접수 취소 메서드
     public void cancelCheckIn(Long checkInId) {
         CheckInEntity checkInEntity = checkInRepository.findById(checkInId)
-                .orElseThrow(() -> new RuntimeException("Check-in not found"));
+                .orElseThrow(() -> new RuntimeException("접수를 찾을 수 없습니다."));
 
         // 취소 처리
         checkInRepository.delete(checkInEntity);

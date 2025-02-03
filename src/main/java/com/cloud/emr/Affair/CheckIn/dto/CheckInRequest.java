@@ -31,5 +31,9 @@ public class CheckInRequest {
                 .userEntity(userEntity)
                 .checkInPurpose(this.checkInPurpose)
                 .build();
+
     }
+
 }
+
+

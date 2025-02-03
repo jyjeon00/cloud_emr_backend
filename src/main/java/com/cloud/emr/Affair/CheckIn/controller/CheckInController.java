@@ -7,6 +7,7 @@ import com.cloud.emr.Affair.CheckIn.repository.CheckInRepository;
 import com.cloud.emr.Affair.CheckIn.service.CheckInService;
 import com.cloud.emr.Main.User.entity.UserEntity;
 import com.cloud.emr.Main.User.repository.UserRepository;
+import com.cloud.emr.Main.User.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,18 +30,15 @@ public class CheckInController {
     @Autowired
     private UserRepository userRepository;
 
-    // 사용자 조회 메서드
-    private UserEntity findUserById(Long userId) {
-        Optional<UserEntity> userEntity = userRepository.findById(userId);  // findById 메서드 사용
-        return userEntity.orElse(null); // 유저가 없으면 null 반환
-    }
+    @Autowired
+    private UserService userService;
 
     // 1. 접수 등록
     @PostMapping("/register")
     public ResponseEntity<Object> registerCheckIn(@RequestParam CheckInRequest checkInRequest, @RequestParam Long userId) {
         try {
             // 사용자 조회
-            UserEntity userEntity = findUserById(userId);
+            UserEntity userEntity = userService.findUserById(userId);
             if (userEntity == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "User not found"));
             }
@@ -96,7 +94,7 @@ public class CheckInController {
         ));
     }
 
-    // 3. 접수 취소
+    // 3. 접수 삭제
     @PostMapping("/cancel")
     public ResponseEntity<Object> cancelCheckIn(@RequestParam Long checkInId) {
         try {

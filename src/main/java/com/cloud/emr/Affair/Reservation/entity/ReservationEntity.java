@@ -1,6 +1,7 @@
 package com.cloud.emr.Affair.Reservation.entity;
 
 import com.cloud.emr.Affair.CheckIn.entity.CheckInEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity(name = "Reservation")
 @Builder
@@ -21,23 +23,23 @@ public class ReservationEntity {
     @Column(name="reservation_id", nullable = false, columnDefinition = "INT")
     private Long reservationId; // 예약 ID
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "checkIn_Id", referencedColumnName = "checkIn_Id", nullable = false, columnDefinition = "INT")
-    private CheckInEntity checkInId; // 접수 ID
+    // 나중에 접수가 완료될 시 예약이 제거되도록
 
     @Column(name = "patient_no", nullable = false, length = 8)
     private String patientNo; // 환자 번호
 
-    @Column(name = "reservation_date")
-    @Temporal(TemporalType.DATE)
-    private LocalDate reservationDate; // 예약 날짜
+    // 예약 날짜 시간 (사용자 입력)
+    @Column(name = "reservation_datetime")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime reservationDate;
 
-    @Column(name = "reservation_YN", nullable = false, length = 1)
-    private String reservationYn; // 예약 여부
+    @Column(name = "reservation_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    private String reservationYn;
 
-    @Column(name = "reservation_change_date")
-    @Temporal(TemporalType.DATE)
-    private LocalDate reservationChangeDate; // 예약 변경 날짜
+    // 예약이 변경될 날짜와 시간 (사용자 입력)
+    @Column(name = "reservation_change_datetime")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime reservationChangeDate;
 
     @Column(name = "reservation_change_cause", length = 100)
     private String reservationChangeCause; // 예약 변경 사유

@@ -23,5 +23,6 @@ public class PatientRegisterRequest {
     private final String patientHypassYN;
     private final LocalDate patientLastVisit;
     private final String guardian;
+    private final String patientRrn;
 
 }

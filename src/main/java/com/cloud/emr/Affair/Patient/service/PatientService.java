@@ -24,8 +24,14 @@ public class PatientService {
         return patientRepository.findByPatientName(patientName);
     }
 
-    public PatientEntity findPatientByNo(String patientNo) {
+    public PatientEntity findPatientByNo(Long patientNo) {
         return patientRepository.findByPatientNo(patientNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 환자를 찾을 수 없습니다." + patientNo));
+    }
+
+    public String findPatientRrnByPatientNo(Long patientNo) {
+        return patientRepository.findByPatientNoAndPatientRrnIsNotNull(patientNo)
+                .map(PatientEntity::getPatientRrn) // PatientEntity에서 rrn 값만 추출
+                .orElseThrow(() -> new IllegalArgumentException("해당 환자의 주민번호를 찾을 수 없습니다. patientNo: " + patientNo));
     }
 }

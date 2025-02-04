@@ -21,7 +21,7 @@ public class CheckInEntity {
     // 접수 ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "checkIn_id", nullable = false, columnDefinition = "INT")
+    @Column(name = "checkIn_id", nullable = false)
     private Long checkInId;
 
     // patientNo는 아직 PatientEntity와 연관되지 않아서, 컬럼으로만 존재
@@ -37,10 +37,10 @@ public class CheckInEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", columnDefinition = "INT",  nullable = false)
     private UserEntity userEntity;
 
-    // 접수 일자
+    // 접수 일자 시간 (접수된 시간)
     @CreationTimestamp
-    @Column(name = "checkIn_date", nullable = false, columnDefinition = "DATE")
-    private LocalDateTime checkInDate;
+    @Column(name = "checkIn_date", nullable = false, columnDefinition = "TIMESTAMP")
+    private LocalDateTime checkInDate; // 접수 일자 시간 (자동으로 접수된 시간)
 
     // 방문 목적
     @Column(name = "checkIn_purpose", nullable = false, length = 100)

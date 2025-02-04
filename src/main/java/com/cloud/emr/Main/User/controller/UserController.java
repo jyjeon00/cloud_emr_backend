@@ -48,3 +48,23 @@ public class UserController {
 
 }
 
+/*
+ 1. 회원가입
+
+ http://localhost:8081/api/users/register
+
+ {
+  "userDepartmentName": "Neurology",
+  "userName": "Jane Smith",
+  "userGender": "Female",
+  "userLoginId": "jane.smith456",
+  "userPassword1": "SecurePass!456",
+  "userPassword2": "SecurePass!456",
+  "userAddress": "456 Oak Ave, Springfield",
+  "userEmail": "jane.smith@example.com",
+  "userTel": "010-9876-5432",
+  "userBirth": "1985-07-20",
+  "userHireDate": "2020-06-15"
+}
+ */
+

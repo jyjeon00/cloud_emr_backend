@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/patient")
@@ -26,29 +27,29 @@ public class PatientController {
     private PatientService patientService;
 
     @Transactional
-    public String generatePatientNo() {
+    public Long generatePatientNo() {
         // DB에서 가장 최근의 환자 번호를 조회
-        String lastPatientNo = patientRepository.findLastPatientNo();
+        // 가장 최근의 환자 번호 조회
+        Optional<PatientEntity> lastPatient = patientRepository.findTopByOrderByPatientNoDesc();
 
-        // 테이블이 비어있으면 P000001로 시작
-        if (lastPatientNo == null || lastPatientNo.isEmpty()) {
-            return "P000001";
-        }
+        // 테이블이 비어있으면 1부터 시작
 
-        // "P000001" 형식에서 숫자 부분만 추출하여 +1
-        int newNumber = Integer.parseInt(lastPatientNo.substring(1)) + 1;
+        return lastPatient.map(p -> p.getPatientNo() + 1).orElse(1L);
+    }
 
-        // 새 번호 생성
-        return String.format("P%06d", newNumber);
+    // 문자열 포맷으로 8자리 유지하는 메서드
+    public String formatPatientNo(Long patientNo) {
+        return String.format("%08d", patientNo);
     }
 
     //환자등록
     @PostMapping("/register")
     public ResponseEntity<?> registerPatient(@RequestBody @Valid PatientRegisterRequest patientRegisterRequest) throws Exception {
-        String patientNo = generatePatientNo();
+        Long patientNo = generatePatientNo();
         PatientEntity patientEntity = PatientEntity.builder()
                 .patientNo(patientNo)
                 .patientName(patientRegisterRequest.getPatientName())
+                .patientRrn(patientRegisterRequest.getPatientRrn())
                 .patientGender(patientRegisterRequest.getPatientGender())
                 .patientBirth(patientRegisterRequest.getPatientBirth())
                 .patientAddress(patientRegisterRequest.getPatientAddress())
@@ -64,7 +65,7 @@ public class PatientController {
         try {
             patientRepository.save(patientEntity);
             return ResponseEntity.ok(
-                    Map.of("message", "환자가 정상적으로 등록되었습니다.", "patientNo", patientNo)
+                    Map.of("message", "환자가 정상적으로 등록되었습니다.", "patientNo", formatPatientNo(patientNo))
             );
         } catch (ObjectOptimisticLockingFailureException e) {
             // 충돌 처리 로직
@@ -87,7 +88,7 @@ public class PatientController {
             // patientNo 필드만 추출
             // 출력 JSON에 동명이인을 포함한 모든 OOO을 찾기 위해, patientNo값을 가져옴
             List<String> patientNos = patients.stream()
-                    .map(PatientEntity::getPatientNo)
+                    .map(patient -> formatPatientNo(patient.getPatientNo()))
                     .toList();
 
 //            List<PatientSearchResponse> response = patients.stream()
@@ -111,7 +112,7 @@ public class PatientController {
 
     //환자정보조회
     @PostMapping("/detail")
-    public ResponseEntity<?> detailPatient(@RequestParam("patientNo") String patientNo) {
+    public ResponseEntity<?> detailPatient(@RequestParam("patientNo") Long patientNo) {
         try {
             PatientEntity patient = patientService.findPatientByNo(patientNo);
 

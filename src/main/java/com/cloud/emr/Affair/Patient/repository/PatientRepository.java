@@ -12,11 +12,12 @@ import java.util.Optional;
 
 @Repository
 public interface PatientRepository extends JpaRepository<PatientEntity, String> {
-    default String findLastPatientNo() {
-        return null;
-    }
+    Optional<PatientEntity> findTopByOrderByPatientNoDesc();
 
     List<PatientEntity> findByPatientName(String patientName);
 
-    Optional<PatientEntity> findByPatientNo(String patientNo);
+    Optional<PatientEntity> findByPatientNo(Long patientNo);
+
+
+    Optional<PatientEntity> findByPatientNoAndPatientRrnIsNotNull(Long patientNo);
 }

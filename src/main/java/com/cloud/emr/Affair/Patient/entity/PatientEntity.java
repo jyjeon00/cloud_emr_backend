@@ -24,16 +24,19 @@ public class PatientEntity {
     @Id
 //    @Size(min=8, max=8, message = "환자번호는 반드시 8자리여야 합니다.")
     @Column(name = "patient_no", nullable = false, unique = true)
+
     private Long patientNo;
 
     @Column(name = "patient_name", nullable = false)
     private String patientName;
 
     //환자 주민번호
+
     @Column(name = "patient_rrn", nullable = false, unique = true)
     private String patientRrn;
 
     @Column(name = "patient_gender", nullable = false)
+
     private String patientGender;
 
     @Column(name = "patient_birth")

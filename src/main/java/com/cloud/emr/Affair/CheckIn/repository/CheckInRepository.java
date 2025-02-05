@@ -16,3 +16,4 @@ public interface CheckInRepository extends JpaRepository<CheckInEntity, Long> {
   조회: findById(), findAll(), findAllById(), count(), existsById()
   삭제: deleteById(), delete(), deleteAll(), deleteAllById()
 */
+

@@ -9,3 +9,4 @@ spring:
     url: jdbc:mysql://localhost:3306/testEMR  # 프로덕션용 데이터베이스 URL
     username: root  # 프로덕션용 데이터베이스 사용자명
     password: 1305  # 프로덕션용 데이터베이스 비밀번호
+

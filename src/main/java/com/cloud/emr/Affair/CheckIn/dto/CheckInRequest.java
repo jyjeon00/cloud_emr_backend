@@ -1,6 +1,5 @@
 package com.cloud.emr.Affair.CheckIn.dto;
 
-
 import com.cloud.emr.Affair.CheckIn.entity.CheckInEntity;
 import com.cloud.emr.Affair.Patient.entity.PatientEntity;
 import com.cloud.emr.Main.User.entity.UserEntity;
@@ -36,5 +35,6 @@ public class CheckInRequest {
     }
 
 }
+
 
 

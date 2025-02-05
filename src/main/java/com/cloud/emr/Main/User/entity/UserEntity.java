@@ -53,7 +53,7 @@ public class UserEntity {
     @CreationTimestamp
     private LocalDateTime userRegisterDate;
 
-
     public UserEntity(Long userId) {
     }
+
 }

@@ -51,3 +51,4 @@ public class ReservationEntity {
 }
 
 // length = 20이 varchar(20)이라는 뜻
+

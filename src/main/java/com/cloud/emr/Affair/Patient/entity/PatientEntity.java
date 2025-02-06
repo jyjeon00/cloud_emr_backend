@@ -23,6 +23,7 @@ public class PatientEntity {
     //환자번호
     @Id
 //    @Size(min=8, max=8, message = "환자번호는 반드시 8자리여야 합니다.")
+
     @Column(name = "patient_no")
     private Long patientNo;
 
@@ -34,6 +35,7 @@ public class PatientEntity {
     private String patientRrn;
 
     @Column(name = "patient_gender")
+
     private String patientGender;
 
     @Column(name = "patient_birth")
@@ -52,11 +54,12 @@ public class PatientEntity {
     private String patientTel;
 
     @Column(name = "patient_foreign")
+
     @Size(min=1, max=2, message = "Y/N")
     private String patientForeign;
 
-    //여권 번호
     @Column(name = "patient_passport")
+
     private String patientPassport;
 
     @Column(name = "patient_hypass_YN")

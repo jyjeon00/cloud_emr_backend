@@ -23,12 +23,61 @@ public class QualificationController {
         this.qualificationService = qualificationService;
     }
 
-    //환자의 주민번호를 바탕으로 MockAPI에 보내는 과정
-    @PostMapping("/insurance-info")
-    public Mono<ResponseEntity<Map<String, Object>>> getPatientRrn(@RequestParam("patientNo") Long patientNo) {
+    //환자의 주민번호를 바탕으로 MockAPI - 건강보험 자격 조회
+    @PostMapping("/health-insurance")
+    public Mono<ResponseEntity<Map<String, Object>>> getPatientHealthInsurance(@RequestParam("patientNo") Long patientNo) {
         try {
             String targetPatientRrn = patientService.findPatientRrnByPatientNo(patientNo);
-            return qualificationService.getInsuranceInfo(targetPatientRrn)
+            return qualificationService.getHealthInsuranceInfo(targetPatientRrn)
+                    .map(insuranceInfo -> ResponseEntity.ok(Map.of(
+                            "message", "조회 성공",
+                            "patientNo", patientNo,
+                            "insuranceInfo", insuranceInfo
+                    )))
+                    .defaultIfEmpty(ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                            Map.of(
+                                    "error", "보험정보가 없습니다."
+                            )
+                    ));
+        } catch (IllegalArgumentException e) {
+            return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    Map.of(
+                            "error", e.getMessage()
+                    )
+            ));
+        }
+    }
+
+    //환자의 주민번호를 바탕으로 MockAPI - 의료 급여 자격 조회
+    @PostMapping("/medical-assistance")
+    public Mono<ResponseEntity<Map<String, Object>>> getPatientMedicalAssistance(@RequestParam("patientNo") Long patientNo) {
+        try {
+            String targetPatientRrn = patientService.findPatientRrnByPatientNo(patientNo);
+            return qualificationService.getMedicalAssistanceInfo(targetPatientRrn)
+                    .map(insuranceInfo -> ResponseEntity.ok(Map.of(
+                            "message", "조회 성공",
+                            "patientNo", patientNo,
+                            "insuranceInfo", insuranceInfo
+                    )))
+                    .defaultIfEmpty(ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                            Map.of(
+                                    "error", "보험정보가 없습니다."
+                            )
+                    ));
+        } catch (IllegalArgumentException e) {
+            return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    Map.of(
+                            "error", e.getMessage()
+                    )
+            ));
+        }
+    }
+
+    @PostMapping("/basic-livelihood")
+    public Mono<ResponseEntity<Map<String, Object>>> getBasicLivelihood(@RequestParam("patientNo") Long patientNo) {
+        try {
+            String targetPatientRrn = patientService.findPatientRrnByPatientNo(patientNo);
+            return qualificationService.getBasicLivelihoodInfo(targetPatientRrn)
                     .map(insuranceInfo -> ResponseEntity.ok(Map.of(
                             "message", "조회 성공",
                             "patientNo", patientNo,

@@ -20,9 +20,37 @@ public class QualificationService {
         this.webClient = webClientBuilder.baseUrl(MOCK_API_URL).build();
     }
 
-    public Mono<Map<String, Object>> getInsuranceInfo(String targetPatientRrn) {
+    public Mono<Map<String, Object>> getHealthInsuranceInfo(String targetPatientRrn) {
         return webClient.post()
-                .uri("")
+                .uri("/health")
+                .bodyValue(Map.of("patientRrn", targetPatientRrn))
+                .retrieve()
+                .onStatus(status -> status.is4xxClientError(), response -> {
+                    if (response.statusCode().equals(HttpStatus.NOT_FOUND)) {
+                        return Mono.empty(); // 404일 경우 Mono.empty() 반환
+                    }
+                    return response.createException().flatMap(Mono::error);
+                })
+                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {});
+    }
+
+    public Mono<Map<String, Object>> getMedicalAssistanceInfo(String targetPatientRrn) {
+        return webClient.post()
+                .uri("/medical-assistance")
+                .bodyValue(Map.of("patientRrn", targetPatientRrn))
+                .retrieve()
+                .onStatus(status -> status.is4xxClientError(), response -> {
+                    if (response.statusCode().equals(HttpStatus.NOT_FOUND)) {
+                        return Mono.empty(); // 404일 경우 Mono.empty() 반환
+                    }
+                    return response.createException().flatMap(Mono::error);
+                })
+                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {});
+    }
+
+    public Mono<Map<String, Object>> getBasicLivelihoodInfo(String targetPatientRrn) {
+        return webClient.post()
+                .uri("/basic-livelihood")
                 .bodyValue(Map.of("patientRrn", targetPatientRrn))
                 .retrieve()
                 .onStatus(status -> status.is4xxClientError(), response -> {

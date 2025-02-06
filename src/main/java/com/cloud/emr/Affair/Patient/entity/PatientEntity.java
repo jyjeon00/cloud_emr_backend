@@ -44,6 +44,8 @@ public class PatientEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date patientBirth;
 
+
+
     @Column(name = "patient_address")
     private String patientAddress;
 

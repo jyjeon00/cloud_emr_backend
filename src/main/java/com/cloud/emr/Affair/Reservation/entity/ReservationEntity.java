@@ -37,7 +37,7 @@ public class ReservationEntity {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime reservationDate;
 
-    @Column(name = "reservation_YN", length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Column(name = "reservation_YN", length = 1)
     private String reservationYn;
 
     // 예약이 변경될 날짜와 시간 (사용자 입력)

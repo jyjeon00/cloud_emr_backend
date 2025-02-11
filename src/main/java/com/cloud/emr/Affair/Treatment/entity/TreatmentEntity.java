@@ -27,12 +27,6 @@ public class TreatmentEntity {
     @JoinColumn(name = "checkIn_id", referencedColumnName = "checkIn_id", nullable = false)
     private CheckInEntity checkInEntity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medical_fee_id", referencedColumnName = "treatment_fee_id", nullable = true)
-    private TreatmentFeeEntity treatmentFeeEntity;
-
-    @Column(name = "treatment_total_fee")
-    private Long treatmentTotalFee;
 
     @CreationTimestamp
     @Column(name = "treatment_date", columnDefinition = "TIMESTAMP")

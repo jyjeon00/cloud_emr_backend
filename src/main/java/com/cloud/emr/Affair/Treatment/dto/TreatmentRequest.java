@@ -2,7 +2,6 @@ package com.cloud.emr.Affair.Treatment.dto;
 
 import com.cloud.emr.Affair.CheckIn.entity.CheckInEntity;
 import com.cloud.emr.Affair.Treatment.entity.TreatmentEntity;
-import com.cloud.emr.Affair.Treatment.entity.TreatmentFeeEntity;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -19,7 +18,6 @@ public class TreatmentRequest {
     //아직 접수만 받고, 진료 전인 경우 진료비는 등록되지 않았을 경우가 있음
     //그래서 nullable 빼두었습니다.
 //    private Long treatmentFeeId;
-    private Long treatmentTotalFee;
     private Date treatmentNextDate;
     private String treatmentComment;
 
@@ -39,7 +37,6 @@ public class TreatmentRequest {
     public TreatmentEntity toTreatmentEntity(CheckInEntity checkInEntity) {
         return TreatmentEntity.builder()
                 .checkInEntity(checkInEntity)
-                .treatmentTotalFee((this.treatmentTotalFee == null) ? 0 : this.treatmentTotalFee)
                 .treatmentNextDate((this.treatmentNextDate == null) ? getMaxDate() : this.treatmentNextDate)
                 .treatmentComment((this.treatmentComment == null) ? "" : this.treatmentComment)
                 .treatmentStatus((this.treatmentStatus == null || this.treatmentStatus.isBlank()) ? "진료전" : this.treatmentStatus)

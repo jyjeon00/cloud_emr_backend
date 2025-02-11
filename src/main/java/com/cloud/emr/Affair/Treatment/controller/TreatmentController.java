@@ -5,7 +5,6 @@ import com.cloud.emr.Affair.CheckIn.entity.CheckInEntity;
 import com.cloud.emr.Affair.CheckIn.service.CheckInService;
 import com.cloud.emr.Affair.Treatment.dto.TreatmentRequest;
 import com.cloud.emr.Affair.Treatment.entity.TreatmentEntity;
-import com.cloud.emr.Affair.Treatment.entity.TreatmentFeeEntity;
 import com.cloud.emr.Affair.Treatment.service.TreatmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +24,7 @@ public class TreatmentController {
 
 
     //진료 등록 (진료비 테이블 조인 전)
-    @PostMapping("register")
+    @PostMapping("/register")
     public ResponseEntity<Object> registerTreatment(@RequestBody TreatmentRequest treatmentRequest, @RequestParam Long checkInId) {
         try {
             //접수 번호에 맞는 접수 찾기
@@ -43,7 +42,6 @@ public class TreatmentController {
             Map<String, Object> responseData = Map.of(
                     "treatmentId", newTreatment.getTreatmentId(),
                     "checkInId", newTreatment.getCheckInEntity().getCheckInId(),
-                    "treatmentTotalFee", newTreatment.getTreatmentTotalFee(),
                     "treatmentDate", newTreatment.getTreatmentDate(),
                     "treatmentStatus", newTreatment.getTreatmentStatus(),
                     "treatmentNextDate", newTreatment.getTreatmentNextDate(),

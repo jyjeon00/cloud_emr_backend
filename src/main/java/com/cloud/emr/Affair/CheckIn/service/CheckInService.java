@@ -53,6 +53,9 @@ public class CheckInService {
         checkInRepository.delete(checkInEntity);
     }
 
+    public CheckInEntity findCheckInById(Long checkInId) {
+        return checkInRepository.findById(checkInId).orElse(null);
+    }
 }
 
 

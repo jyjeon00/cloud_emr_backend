@@ -25,10 +25,10 @@ public class TreatmentService {
         return treatmentFeeRepository.findById(treatmentFeeId).orElse(null);
     }
 
-    public TreatmentEntity createTreatment(TreatmentRequest treatmentRequest, CheckInEntity checkInEntity, TreatmentFeeEntity treatmentFeeEntity) {
+    public TreatmentEntity createTreatment(TreatmentRequest treatmentRequest, CheckInEntity checkInEntity) {
 
         // TreatmentEntity 객체 생성
-        TreatmentEntity treatmentEntity = treatmentRequest.toTreatmentEntity(checkInEntity, treatmentFeeEntity);
+        TreatmentEntity treatmentEntity = treatmentRequest.toTreatmentEntity(checkInEntity);
 
         // TreatmentEntity 저장
         return treatmentRepository.save(treatmentEntity);

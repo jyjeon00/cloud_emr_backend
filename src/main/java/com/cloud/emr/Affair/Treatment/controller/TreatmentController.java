@@ -24,7 +24,7 @@ public class TreatmentController {
     private CheckInService checkInService;
 
 
-    //진료 등록
+    //진료 등록 (진료비 테이블 조인 전)
     @PostMapping("register")
     public ResponseEntity<Object> registerTreatment(@RequestBody TreatmentRequest treatmentRequest, @RequestParam Long checkInId) {
         try {
@@ -37,17 +37,12 @@ public class TreatmentController {
                 ));
             }
 
-            TreatmentFeeEntity treatmentFeeEntity = null;
-            if (treatmentRequest.getTreatmentFeeId() != null) {
-                treatmentFeeEntity = treatmentService.findFeeById(treatmentRequest.getTreatmentFeeId());
-            }
 
-            TreatmentEntity newTreatment = treatmentService.createTreatment(treatmentRequest, checkInEntity, treatmentFeeEntity);
+            TreatmentEntity newTreatment = treatmentService.createTreatment(treatmentRequest, checkInEntity);
 
             Map<String, Object> responseData = Map.of(
                     "treatmentId", newTreatment.getTreatmentId(),
                     "checkInId", newTreatment.getCheckInEntity().getCheckInId(),
-                    "treatmentFeeId", newTreatment.getTreatmentFeeEntity().getTreatmentFeeId(),
                     "treatmentTotalFee", newTreatment.getTreatmentTotalFee(),
                     "treatmentDate", newTreatment.getTreatmentDate(),
                     "treatmentStatus", newTreatment.getTreatmentStatus(),

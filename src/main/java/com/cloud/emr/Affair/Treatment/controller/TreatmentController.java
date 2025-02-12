@@ -3,6 +3,8 @@ package com.cloud.emr.Affair.Treatment.controller;
 
 import com.cloud.emr.Affair.CheckIn.entity.CheckInEntity;
 import com.cloud.emr.Affair.CheckIn.service.CheckInService;
+import com.cloud.emr.Affair.MedicalFee.service.MedicalFeeService;
+import com.cloud.emr.Affair.Treatment.dto.TreatmentResponse;
 import com.cloud.emr.Affair.Treatment.dto.TreatmentRequest;
 import com.cloud.emr.Affair.Treatment.entity.TreatmentEntity;
 import com.cloud.emr.Affair.Treatment.service.TreatmentService;
@@ -21,6 +23,28 @@ public class TreatmentController {
     private TreatmentService treatmentService;
     @Autowired
     private CheckInService checkInService;
+    @Autowired
+    private MedicalFeeService medicalFeeService;
+
+
+    //진료 조회 (진료비 조회까지)
+    // 진료비 조회는 되는데, 추후에 진료 유형까지 나오도록하겠습니다.
+    @GetMapping("/search")
+    public ResponseEntity<Object> searchTreatment(@RequestParam Long treatmentId) {
+        TreatmentResponse treatmentResponse = medicalFeeService.updateTotalFeeForTreatment(treatmentId);
+
+        if(treatmentResponse == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
+                    "message", "진료를 찾을 수 없습니다."
+            ));
+        }
+
+        return ResponseEntity.ok(Map.of(
+                "message", "조회 성공",
+                "data", treatmentResponse
+        ));
+
+    }
 
 
     //진료 등록 (진료비 테이블 조인 전)

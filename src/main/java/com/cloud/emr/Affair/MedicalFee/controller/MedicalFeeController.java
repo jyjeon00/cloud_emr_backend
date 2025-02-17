@@ -3,7 +3,6 @@ package com.cloud.emr.Affair.MedicalFee.controller;
 
 import com.cloud.emr.Affair.MedicalFee.dto.MedicalFeeRequest;
 import com.cloud.emr.Affair.MedicalFee.dto.MedicalFeeResponse;
-import com.cloud.emr.Affair.MedicalFee.entity.MedicalFeeEntity;
 import com.cloud.emr.Affair.MedicalFee.entity.MedicalTypeEntity;
 import com.cloud.emr.Affair.MedicalFee.repository.MedicalTypeRepository;
 import com.cloud.emr.Affair.MedicalFee.service.MedicalFeeService;
@@ -76,8 +75,5 @@ public class MedicalFeeController {
             );
         }
     }
-
-
-    //진료ID에 해당하는 진료비 조회 (진료 유형, 진료 유형에 해당하는 금액, 총 금액)
 
 }

@@ -17,6 +17,7 @@ public interface PaymentRepository extends JpaRepository<PaymentEntity, Long> {
     // 환자 번호와 결제 ID로 결제 내역 조회
     List<PaymentEntity> findByTreatmentEntity_CheckInEntity_PatientEntity_PatientNoAndPaymentId(Long patientNo, Long paymentId);
 
+
     // 환자 번호로 결제 내역 조회
     List<PaymentEntity> findByTreatmentEntity_CheckInEntity_PatientEntity_PatientNo(Long patientNo);
 

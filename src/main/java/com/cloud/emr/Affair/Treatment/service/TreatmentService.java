@@ -30,4 +30,6 @@ public class TreatmentService {
     public TreatmentEntity findTreatmentById(Long treatmentId) {
         return treatmentRepository.findById(treatmentId).orElse(null);
     }
+
+
 }

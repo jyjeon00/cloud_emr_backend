@@ -49,6 +49,7 @@ public class TreatmentEntity {
     //진료의
     @Column(name = "treatment_doc")
     private String treatmentDoc;
+
     //총 진료비
     @Column(name = "treatment_total_fee")
     private Long treatmentTotalFee;
@@ -56,4 +57,5 @@ public class TreatmentEntity {
     public void setTreatmentTotalFee(Long totalFee) {
         this.treatmentTotalFee = totalFee;
     }
+
 }

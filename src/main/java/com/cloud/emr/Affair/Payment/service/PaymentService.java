@@ -111,7 +111,8 @@ public class PaymentService {
 
     // 단건 결제 조회 (결제 ID와 환자 ID를 동시에 고려)
     public PaymentResponse getPayment(Long paymentId, Long patientNo) {
-        PaymentEntity payment = paymentRepository.findByIdAndTreatmentEntity_CheckInEntity_PatientEntity_PatientNo(paymentId, patientNo)
+        PaymentEntity payment = paymentRepository.findByPaymentIdAndTreatmentEntity_CheckInEntity_PatientEntity_PatientNo(paymentId, patientNo)
+
                 .orElseThrow(() -> new EntityNotFoundException("해당 결제 내역을 찾을 수 없습니다."));
 
         return new PaymentResponse(payment);
@@ -123,7 +124,9 @@ public class PaymentService {
 
         if (patientNo != null && paymentId != null) {
             // 환자 번호와 결제 ID로 결제 내역 조회
-            payments = paymentRepository.findByTreatmentEntity_CheckInEntity_PatientEntity_PatientNoAndId(patientNo, paymentId);
+
+            payments = paymentRepository.findByTreatmentEntity_CheckInEntity_PatientEntity_PatientNoAndPaymentId(patientNo, paymentId);
+
         } else if (patientNo != null) {
             // 환자 번호로 결제 내역 조회
             payments = paymentRepository.findByTreatmentEntity_CheckInEntity_PatientEntity_PatientNo(patientNo);

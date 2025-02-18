@@ -73,6 +73,7 @@ public class QualificationController {
         }
     }
 
+    //기초 생활 수급 자격 확인
     @PostMapping("/basic-livelihood")
     public Mono<ResponseEntity<Map<String, Object>>> getBasicLivelihood(@RequestParam("patientNo") Long patientNo) {
         try {

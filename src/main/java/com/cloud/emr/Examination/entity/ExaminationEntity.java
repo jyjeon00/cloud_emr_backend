@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import com.cloud.emr.Examination.Equipment.entity.EquipmentEntity;
+
 @Entity(name = "Examination")
 @Getter
 @Builder
@@ -17,12 +19,13 @@ import lombok.NoArgsConstructor;
 public class ExaminationEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "examination_id", nullable = false)
+    private Long examinationId;
 
-    @Column(name = "examination_no")
-    private String examinationNo;
-
-    @Column(name = "equipment_no")
-    private String equipmentNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "equipment_id", referencedColumnName = "equipment_id", nullable = false)
+    private EquipmentEntity EquipmentEntity;
 
     @Column(name = "examination_name")
     private String examinationName;
@@ -30,9 +33,10 @@ public class ExaminationEntity {
     @Column(name = "examination_type")
     private String examinationType;
 
-    @Column(name = "examination_equipment")
-    private String examinationEquipment;
+    @Column(name = "examination_equipment_name")
+    private String examinationEquipmentName;
 
+    // 주의 사항, 금지 사항
     @Column(name = "examination_constraints")
     private String examinationConstraints;
 

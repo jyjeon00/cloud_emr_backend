@@ -4,12 +4,22 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+
+import com.cloud.emr.Examination.entity.ExaminationEntity;
+import com.cloud.emr.Affair.Patient.entity.PatientEntity;
+import com.cloud.emr.Affair.Treatment.entity.TreatmentEntity;
+import com.cloud.emr.Main.User.entity.UserEntity;
 
 @Entity(name = "ExaminationSchedule")
 @Getter
@@ -19,18 +29,25 @@ import java.util.Date;
 public class ExaminationScheduleEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "examination_schedule_id", nullable = false)
+    private Long examinationScheduleId;
 
-    @Column(name = "examination_no")
-    private String examinationNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "examination_id", referencedColumnName = "examination_id", nullable = false)
+    private ExaminationEntity ExaminationEntity;
 
-    @Column(name = "patient_no")
-    private String patientNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_no", referencedColumnName = "patient_no", nullable = false)
+    private PatientEntity patientEntity;
 
-    @Column(name = "treatment_no")
-    private String treatmentNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "treatment_id", referencedColumnName = "treatment_id", nullable = false, columnDefinition = "INT")
+    private TreatmentEntity TreatmentEntity;
 
-    @Column(name = "user_no")
-    private String userNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    private UserEntity UserEntity;
 
     @Column(name = "examination_Date")
     @JsonFormat(pattern = "yyyy-MM-dd")

@@ -1,6 +1,5 @@
 package com.cloud.emr.Examination.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -9,7 +8,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+
 import java.util.Date;
+
+import com.cloud.emr.Examination.entity.ExaminationEntity;
+import com.cloud.emr.Affair.Patient.entity.PatientEntity;
+import com.cloud.emr.Affair.Treatment.entity.TreatmentEntity;
 
 @Entity(name = "ExaminationResult")
 @Getter
@@ -19,15 +23,21 @@ import java.util.Date;
 public class ExaminationResultEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "examination_result_id", nullable = false)
+    private Long examinationResultId;
 
-    @Column(name = "examination_no")
-    private String examinationNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "examination_id", referencedColumnName = "examination_id", nullable = false)
+    private ExaminationEntity ExaminationEntity;
 
-    @Column(name = "patient_no")
-    private String patientNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_no", referencedColumnName = "patient_no", nullable = false)
+    private PatientEntity patientEntity;
 
-    @Column(name = "treatment_no")
-    private String treatmentNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "treatment_id", referencedColumnName = "treatment_id", nullable = false, columnDefinition = "INT")
+    private TreatmentEntity TreatmentEntity;
 
     @Column(name = "examination_date")
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -36,8 +46,9 @@ public class ExaminationResultEntity {
     @Column(name = "examination_result")
     private String examinationResult;
 
+    // 정상 수치인지
     @Column(name = "examination_normal")
-    private String examinationNormal;
+    private Boolean examinationNormal;
 
     @Column(name = "examination_notes")
     private String examinationNotes;

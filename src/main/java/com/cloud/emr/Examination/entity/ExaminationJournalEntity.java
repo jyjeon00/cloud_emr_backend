@@ -4,12 +4,25 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+
+import com.cloud.emr.Examination.entity.ExaminationEntity;
+import com.cloud.emr.Affair.Patient.entity.PatientEntity;
+import com.cloud.emr.Affair.Treatment.entity.TreatmentEntity;
+import com.cloud.emr.Main.User.entity.UserEntity;
+// TODO: Make Doctor Entity
+// import com.cloud.emr.Main.User.entity.DoctorEntity;
+import com.cloud.emr.Examination.Equipment.entity.EquipmentEntity;
 
 @Entity(name = "ExaminationJournal")
 @Getter
@@ -19,31 +32,41 @@ import java.util.Date;
 public class ExaminationJournalEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "examination_journal_id", nullable = false)
+    private Long examinationJournalId;
 
-    @Column(name = "examination_no")
-    private String examinationNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "examination_id", referencedColumnName = "examination_id", nullable = false)
+    private ExaminationEntity ExaminationEntity;
 
-    @Column(name = "patient_no")
-    private String patientNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_no", referencedColumnName = "patient_no", nullable = false)
+    private PatientEntity patientEntity;
 
-    @Column(name = "treatment_no")
-    private String treatmentNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "treatment_id", referencedColumnName = "treatment_id", nullable = false, columnDefinition = "INT")
+    private TreatmentEntity TreatmentEntity;
 
-    @Column(name = "user_no")
-    private String userNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    private UserEntity UserEntity;
 
-    @Column(name = "doctor_no")
-    private String doctorNo;
+    // TODO: Make Doctor Entity
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id", nullable = false)
+//    private DoctorEntity DoctorEntity;
 
-    @Column(name = "equipment_no")
-    private String equipmentNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "equipment_id", referencedColumnName = "equipment_id", nullable = false)
+    private EquipmentEntity EquipmentEntity;
 
     @Column(name = "examination_time")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date examinationTime;
 
     @Column(name = "examination_equipment_usage")
-    private String examinationEquipmentUsage;
+    private Boolean examinationEquipmentUsage;
 
     @Column(name = "examination_notes")
     private String examinationNotes;

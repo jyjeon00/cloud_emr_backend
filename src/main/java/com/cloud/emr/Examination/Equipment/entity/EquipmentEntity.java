@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,12 +22,15 @@ import lombok.NoArgsConstructor;
 public class EquipmentEntity {
 
     @Id
-
-    @Column(name = "equipment_no")
-    private String equipmentNo;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "equipment_id", nullable = false)
+    private String equipmentId;
 
     @Column(name = "equipment_name")
     private String equipmentName;
+
+    @Column(name = "equipment_product_number")
+    private String equipmentProductNumber;
 
     @Column(name = "equipment_manufacturer")
     private String equipmentManufacturer;

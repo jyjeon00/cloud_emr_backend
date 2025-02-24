@@ -1,4 +1,4 @@
-package com.cloud.emr.Examination.entity;
+package com.cloud.emr.Examination.Examination.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -23,18 +23,16 @@ public class ExaminationEntity {
     @Column(name = "examination_id", nullable = false)
     private Long examinationId;
 
+    // for equipmentId and equipmentName
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "equipment_id", referencedColumnName = "equipment_id", nullable = false)
-    private EquipmentEntity EquipmentEntity;
+    @JoinColumn(name = "equipment_id", referencedColumnName = "equipment_id")
+    private EquipmentEntity equipmentEntity;
 
     @Column(name = "examination_name")
     private String examinationName;
 
     @Column(name = "examination_type")
     private String examinationType;
-
-    @Column(name = "examination_equipment_name")
-    private String examinationEquipmentName;
 
     // 주의 사항, 금지 사항
     @Column(name = "examination_constraints")

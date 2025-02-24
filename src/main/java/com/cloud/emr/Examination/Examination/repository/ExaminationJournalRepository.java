@@ -1,7 +1,7 @@
-package com.cloud.emr.Examination.repository;
+package com.cloud.emr.Examination.Examination.repository;
 
 import com.cloud.emr.Affair.Patient.entity.PatientEntity;
-import com.cloud.emr.Examination.entity.ExaminationJournalEntity;
+import com.cloud.emr.Examination.Examination.entity.ExaminationJournalEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

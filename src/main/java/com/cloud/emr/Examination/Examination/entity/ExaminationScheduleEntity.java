@@ -1,4 +1,4 @@
-package com.cloud.emr.Examination.entity;
+package com.cloud.emr.Examination.Examination.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-import com.cloud.emr.Examination.entity.ExaminationEntity;
 import com.cloud.emr.Affair.Patient.entity.PatientEntity;
 import com.cloud.emr.Affair.Treatment.entity.TreatmentEntity;
 import com.cloud.emr.Main.User.entity.UserEntity;

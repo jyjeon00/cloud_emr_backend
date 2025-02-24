@@ -1,31 +1,36 @@
-package com.cloud.emr.Examination.entity;
+package com.cloud.emr.Examination.Examination.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
-import com.cloud.emr.Examination.entity.ExaminationEntity;
 import com.cloud.emr.Affair.Patient.entity.PatientEntity;
 import com.cloud.emr.Affair.Treatment.entity.TreatmentEntity;
+import com.cloud.emr.Main.User.entity.UserEntity;
 
-@Entity(name = "ExaminationResult")
+@Entity(name = "ExaminationSchedule")
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExaminationResultEntity {
+public class BloodBankEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "examination_result_id", nullable = false)
-    private Long examinationResultId;
+    @Column(name = "blood_bank_id", nullable = false)
+    private Long bloodBankId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "examination_id", referencedColumnName = "examination_id", nullable = false)
@@ -39,19 +44,16 @@ public class ExaminationResultEntity {
     @JoinColumn(name = "treatment_id", referencedColumnName = "treatment_id", nullable = false, columnDefinition = "INT")
     private TreatmentEntity TreatmentEntity;
 
-    @Column(name = "examination_date")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date examinationDate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    private UserEntity UserEntity;
 
-    @Column(name = "examination_result")
-    private String examinationResult;
+    @Column(name = "examination_Time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private Date examinationTime;
 
-    // 정상 수치인지
-    @Column(name = "examination_normal")
-    private Boolean examinationNormal;
-
-    @Column(name = "examination_notes")
-    private String examinationNotes;
+    @Column(name = "blood_type")
+    private String bloodType;
 
     // 이 아래는 그냥 다른 테이블에서 가져와서 화면에 띄울까?
 //    @Column(name = "examination_name")
@@ -62,4 +64,10 @@ public class ExaminationResultEntity {
 //
 //    @Column(name = "patient_name")
 //    private String patientName;
+//
+//    @Column(name = "User_name")
+//    private String UserName;
+//
+//    @Column(name = "examination_location")
+//    private String examinationLocation;
 }

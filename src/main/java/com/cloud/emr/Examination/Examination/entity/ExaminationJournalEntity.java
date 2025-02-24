@@ -1,4 +1,4 @@
-package com.cloud.emr.Examination.entity;
+package com.cloud.emr.Examination.Examination.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
@@ -19,18 +19,21 @@ import java.util.Date;
 import com.cloud.emr.Affair.Patient.entity.PatientEntity;
 import com.cloud.emr.Affair.Treatment.entity.TreatmentEntity;
 import com.cloud.emr.Main.User.entity.UserEntity;
+// TODO: Make Doctor Entity
+// import com.cloud.emr.Main.User.entity.DoctorEntity;
+import com.cloud.emr.Examination.Equipment.entity.EquipmentEntity;
 
-@Entity(name = "ExaminationSchedule")
+@Entity(name = "ExaminationJournal")
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BloodBankEntity {
+public class ExaminationJournalEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "blood_bank_id", nullable = false)
-    private Long bloodBankId;
+    @Column(name = "examination_journal_id", nullable = false)
+    private Long examinationJournalId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "examination_id", referencedColumnName = "examination_id", nullable = false)
@@ -48,12 +51,24 @@ public class BloodBankEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private UserEntity UserEntity;
 
-    @Column(name = "examination_Time")
+    // TODO: Make Doctor Entity
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id", nullable = false)
+//    private DoctorEntity DoctorEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "equipment_id", referencedColumnName = "equipment_id", nullable = false)
+    private EquipmentEntity EquipmentEntity;
+
+    @Column(name = "examination_time")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date examinationTime;
 
-    @Column(name = "blood_type")
-    private String bloodType;
+    @Column(name = "examination_equipment_usage")
+    private Boolean examinationEquipmentUsage;
+
+    @Column(name = "examination_notes")
+    private String examinationNotes;
 
     // 이 아래는 그냥 다른 테이블에서 가져와서 화면에 띄울까?
 //    @Column(name = "examination_name")
@@ -68,6 +83,9 @@ public class BloodBankEntity {
 //    @Column(name = "User_name")
 //    private String UserName;
 //
-//    @Column(name = "examination_location")
-//    private String examinationLocation;
+//    @Column(name = "Doctor_name")
+//    private String DoctorName;
+//
+//    @Column(name = "examination_equipment")
+//    private String examinationEquipment;
 }

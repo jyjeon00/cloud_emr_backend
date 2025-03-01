@@ -14,6 +14,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Entity(name = "Examination")
 @Getter
 @Builder
@@ -24,7 +26,7 @@ public class EquipmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "equipment_id", nullable = false)
-    private String equipmentId;
+    private Long equipmentId;
 
     @Column(name = "equipment_name")
     private String equipmentName;
@@ -42,7 +44,9 @@ public class EquipmentEntity {
     private String equipmentState;
 
     @Column(name = "equipment_schedule")
-    private String equipmentSchedule;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date equipmentSchedule;
+
 
     // 이 아래는 그냥 다른 테이블에서 가져와서 화면에 띄울까?
 }

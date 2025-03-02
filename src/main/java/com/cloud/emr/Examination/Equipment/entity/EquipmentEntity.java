@@ -14,7 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "Examination")
+@Entity(name = "Equipment")
 @Getter
 @Builder
 @AllArgsConstructor

@@ -2,20 +2,17 @@ package com.cloud.emr.Examination.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
-import com.cloud.emr.Examination.entity.ExaminationEntity;
 import com.cloud.emr.Affair.Patient.entity.PatientEntity;
-import com.cloud.emr.Affair.Treatment.entity.TreatmentEntity;
+import com.cloud.emr.Treatment.Treatment.entity.TreatmentEntity;
 
-@Entity(name = "ExaminationResult")
+@Entity(name = "Examination_Result")
 @Getter
 @Builder
 @AllArgsConstructor

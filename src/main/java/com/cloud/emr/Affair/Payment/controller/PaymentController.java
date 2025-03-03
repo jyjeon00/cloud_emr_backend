@@ -3,11 +3,9 @@ package com.cloud.emr.Affair.Payment.controller;
 import com.cloud.emr.Affair.Payment.dto.PaymentRegisterRequest;
 import com.cloud.emr.Affair.Payment.dto.PaymentResponse;
 import com.cloud.emr.Affair.Payment.dto.PaymentUpdateRequest;
-import com.cloud.emr.Affair.Payment.entity.PaymentEntity;
 import com.cloud.emr.Affair.Payment.service.PaymentService;
-import com.cloud.emr.Affair.Treatment.entity.TreatmentEntity;
-import com.cloud.emr.Affair.Treatment.repository.TreatmentRepository;
-import com.cloud.emr.Affair.Treatment.service.TreatmentService;
+import com.cloud.emr.Treatment.Treatment.entity.TreatmentEntity;
+import com.cloud.emr.Treatment.Treatment.service.TreatmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +56,7 @@ public class PaymentController {
             ));
         }
     }
-
+/*
     // 2. 부분 결제 및 완납
     @PostMapping("/update")
     public ResponseEntity<Object> updatePayment(@RequestBody PaymentUpdateRequest paymentUpdateRequest) {
@@ -82,6 +80,9 @@ public class PaymentController {
         }
     }
 
+ */
+
+    /*
     // 3. 결제내역 단건 조회 (결제 ID와 환자 ID를 동시에 고려)
     @GetMapping("/{paymentId}/patient/{patientNo}")
     public ResponseEntity<Object> getPayment(@PathVariable Long paymentId, @PathVariable Long patientNo) {
@@ -124,5 +125,5 @@ public class PaymentController {
             ));
         }
     }
-
+*/
 }

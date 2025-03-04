@@ -1,4 +1,4 @@
-package com.cloud.emr.Examination.entity;
+package com.cloud.emr.Examination.Examination.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;

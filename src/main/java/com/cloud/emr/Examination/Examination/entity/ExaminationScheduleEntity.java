@@ -1,4 +1,4 @@
-package com.cloud.emr.Examination.entity;
+package com.cloud.emr.Examination.Examination.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
@@ -20,17 +20,17 @@ import com.cloud.emr.Affair.Patient.entity.PatientEntity;
 import com.cloud.emr.Treatment.Treatment.entity.TreatmentEntity;
 import com.cloud.emr.Main.User.entity.UserEntity;
 
-@Entity(name = "blood_bank")
+@Entity(name = "Examination_Schedule")
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BloodBankEntity {
+public class ExaminationScheduleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "blood_bank_id", nullable = false)
-    private Long bloodBankId;
+    @Column(name = "examination_schedule_id", nullable = false)
+    private Long examinationScheduleId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "examination_id", referencedColumnName = "examination_id", nullable = false)
@@ -48,12 +48,9 @@ public class BloodBankEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private UserEntity UserEntity;
 
-    @Column(name = "examination_Time")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private Date examinationTime;
-
-    @Column(name = "blood_type")
-    private String bloodType;
+    @Column(name = "examination_Date")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date examinationDate;
 
     // 이 아래는 그냥 다른 테이블에서 가져와서 화면에 띄울까?
 //    @Column(name = "examination_name")

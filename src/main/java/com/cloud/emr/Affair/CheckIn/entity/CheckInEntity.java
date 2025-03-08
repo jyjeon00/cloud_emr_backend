@@ -12,7 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
-@Entity(name = "Check_In")
+@Entity(name = "CheckIn")
 @Builder
 @Getter
 @AllArgsConstructor

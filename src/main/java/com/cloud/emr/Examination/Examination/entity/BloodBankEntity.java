@@ -20,6 +20,7 @@ import com.cloud.emr.Affair.Patient.entity.PatientEntity;
 import com.cloud.emr.Treatment.Treatment.entity.TreatmentEntity;
 import com.cloud.emr.Main.User.entity.UserEntity;
 
+
 @Entity(name = "Blood_Bank")
 @Getter
 @Builder

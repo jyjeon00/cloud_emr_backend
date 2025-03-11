@@ -5,9 +5,9 @@ import com.cloud.emr.Affair.MedicalFee.dto.MedicalFeeResponse;
 import com.cloud.emr.Affair.MedicalFee.entity.MedicalFeeEntity;
 import com.cloud.emr.Affair.MedicalFee.entity.MedicalTypeEntity;
 import com.cloud.emr.Affair.MedicalFee.repository.MedicalFeeRepository;
-import com.cloud.emr.Affair.Treatment.dto.TreatmentResponse;
-import com.cloud.emr.Affair.Treatment.entity.TreatmentEntity;
-import com.cloud.emr.Affair.Treatment.repository.TreatmentRepository;
+import com.cloud.emr.Treatment.Treatment.dto.TreatmentResponse;
+import com.cloud.emr.Treatment.Treatment.entity.TreatmentEntity;
+import com.cloud.emr.Treatment.Treatment.repository.TreatmentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +53,7 @@ public class MedicalFeeService {
         Long totalFee = medicalFees.stream()
                 .mapToLong(medicalFee -> medicalFee.getMedicalTypeEntity().getMedicalTypeFee())
                 .sum();
-
+/*
         // 기존 객체의 필드를 유지하면서 새로운 값만 변경
         TreatmentEntity updatedTreatment = TreatmentEntity.builder()
                 .treatmentId(treatment.getTreatmentId())
@@ -80,7 +80,9 @@ public class MedicalFeeService {
                 updatedTreatment.getTreatmentDoc(),
                 updatedTreatment.getTreatmentTotalFee()
         );
-        return treatmentResponse;
+
+ */
+        return null;
 
 
 

@@ -5,9 +5,8 @@ import com.cloud.emr.Affair.Payment.dto.PaymentResponse;
 import com.cloud.emr.Affair.Payment.dto.PaymentUpdateRequest;
 import com.cloud.emr.Affair.Payment.entity.PaymentEntity;
 import com.cloud.emr.Affair.Payment.repository.PaymentRepository;
-import com.cloud.emr.Affair.Treatment.entity.TreatmentEntity;
-import com.cloud.emr.Affair.Treatment.repository.TreatmentRepository;
-import jakarta.persistence.Column;
+import com.cloud.emr.Treatment.Treatment.entity.TreatmentEntity;
+import com.cloud.emr.Treatment.Treatment.repository.TreatmentRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,11 +30,11 @@ public class PaymentService {
     public PaymentResponse registerPayment(PaymentRegisterRequest request, TreatmentEntity treatmentEntity) {
 
         // 1. 총 수납 금액 (진료비)
-        Long totalAmount = treatmentEntity.getTreatmentTotalFee(); // 진료 총 금액
+       // Long totalAmount = treatmentEntity.getTreatmentTotalFee(); // 진료 총 금액
 
         // 2. 본인 부담 금액 = 진료 총 금액 - 보험사 지원 금액
         Long insuranceAmount = 10000L;  // 보험사 지원 금액 (예시로 고정)
-        Long selfPayAmount = totalAmount - insuranceAmount;  // 본인 부담 금액
+       // Long selfPayAmount = totalAmount - insuranceAmount;  // 본인 부담 금액
 
         // 3. 현재 수납액 (지금까지 결제된 금액)
         // 최초 시점에서는 결제 내역이 아직 없기 때문 0으로 설정
@@ -43,11 +42,11 @@ public class PaymentService {
         
         // 4. 이번 수납액 (이번에 결제한 금액)
         // 이번에 결제할 금액은 본인 부담 금액에서 현재 수납액을 뺌
-        Long amountPaidNow = selfPayAmount - currentPaidAmount;  // 이번 결제 금액
+       // Long amountPaidNow = selfPayAmount - currentPaidAmount;  // 이번 결제 금액
 
         // 5. 남은 수납액 (본인 부담 금액 - 현재 수납액)
-        Long remainingAmount = selfPayAmount - currentPaidAmount;  // 남은 금액
-
+        //Long remainingAmount = selfPayAmount - currentPaidAmount;  // 남은 금액
+/*
 
         // 결제 정보 생성
         PaymentEntity payment = PaymentEntity.builder()
@@ -62,10 +61,12 @@ public class PaymentService {
 
         // 저장
         paymentRepository.save(payment);
-        return new PaymentResponse(payment);
+
+ */
+        return null;// new PaymentResponse(payment);
     }
 
-
+/*
     // 결제 처리와 금액 변경
     @Transactional
     public PaymentResponse updatePayment(PaymentUpdateRequest request) {
@@ -140,5 +141,5 @@ public class PaymentService {
 
         return payments.stream().map(PaymentResponse::new).collect(Collectors.toList());
     }
-
+*/
 }

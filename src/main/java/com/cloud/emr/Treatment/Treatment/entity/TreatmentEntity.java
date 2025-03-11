@@ -1,7 +1,10 @@
-package com.cloud.emr.Affair.Treatment.entity;
+package com.cloud.emr.Treatment.Treatment.entity;
 
 
 import com.cloud.emr.Affair.CheckIn.entity.CheckInEntity;
+import com.cloud.emr.Main.User.entity.UserEntity;
+import com.cloud.emr.Treatment.Treatment.status.TreatmentType;
+import com.cloud.emr.Treatment.Treatment.status.TreatmentUseType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,8 +14,13 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+/*
+로직 설명
+접수 -> 진료예약(생성) -> 실제 진료시 볼경우 진료여부 Y - order가 생성
 
-@Entity(name = "Treatment")
+
+ */
+@Entity(name = "Treatments")
 @Builder(toBuilder = true)
 @Getter
 @NoArgsConstructor
@@ -23,36 +31,29 @@ public class TreatmentEntity {
     @Column(name = "treatment_id", nullable = false, columnDefinition = "INT")
     private Long treatmentId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "checkIn_id", referencedColumnName = "checkIn_id", nullable = false)
-    private CheckInEntity checkInEntity;
+    @Column(name = "treatment_status")
+    @Enumerated(EnumType.STRING)
+    private TreatmentUseType treatmentStatus;
 
+    @Column(name = "treatment_type")
+    @Enumerated(EnumType.STRING)
+    private TreatmentType TreatmentType;
+
+    //진료생성일
     @CreationTimestamp
     @Column(name = "treatment_date", columnDefinition = "TIMESTAMP")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date treatmentDate;
-
-    @Column(name = "treatment_status")
-    private String treatmentStatus;
-
-    @Column(name = "treatment_nextdate")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date treatmentNextDate;
-
-    @Column(name = "treatment_comment")
-    private String treatmentComment;
 
     //진료과
     @Column(name = "treatment_dept")
     private String treatmentDept;
 
     //진료의
-    @Column(name = "treatment_doc")
-    private String treatmentDoc;
+    @JoinColumn(name = "treatment_doc")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private UserEntity treatmentDoc;
 
-    //총 진료비
-    @Column(name = "treatment_total_fee")
-    private Long treatmentTotalFee;
 
 
 }

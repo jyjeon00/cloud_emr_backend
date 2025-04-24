@@ -24,6 +24,6 @@ public class MedicalFeeEntity {
     private MedicalTypeEntity medicalTypeEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "treatment_id", referencedColumnName = "treatment_id", columnDefinition = "INT")
+    @JoinColumn(name = "treatment_id", referencedColumnName = "treatment_id")
     private TreatmentEntity treatmentEntity;
 }

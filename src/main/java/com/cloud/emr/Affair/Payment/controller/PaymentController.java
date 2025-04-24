@@ -23,7 +23,7 @@ public class PaymentController {
 
     @Autowired
     private TreatmentService treatmentService;
-
+/*
     // 1. 수납 내역 등록 (환자나 보험사에 대한 수납 정보만을 기록)
     @PostMapping("/register")
     public ResponseEntity<Object> registerPayment(@RequestBody PaymentRegisterRequest paymentRegisterRequest, @RequestParam Long treatmentId) {

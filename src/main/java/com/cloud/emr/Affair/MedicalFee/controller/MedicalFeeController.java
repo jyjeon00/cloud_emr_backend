@@ -30,7 +30,7 @@ public class MedicalFeeController {
     @Autowired
     private MedicalTypeService medicalTypeService;
 
-
+/*
     //진료ID에 따른 진료 유형 등록
     @PostMapping("/register")
     public ResponseEntity<Object> registerMedicalFee(@RequestBody MedicalFeeRequest medicalFeeRequest, @RequestParam Long treatmentId) {
@@ -75,5 +75,5 @@ public class MedicalFeeController {
             );
         }
     }
-
+*/
 }

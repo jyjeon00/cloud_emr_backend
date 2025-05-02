@@ -37,7 +37,7 @@ public class EquipmentService {
 
     public EquipmentResponse readEquipment(Long equipmentId) {
 
-        EquipmentEntity equipmentEntity = equipmentRepository.findByEquipmentIdOptional(equipmentId)
+        EquipmentEntity equipmentEntity = equipmentRepository.findByEquipmentId(equipmentId)
                 .orElseThrow(() -> new RuntimeException("해당 장비 정보가 없습니다."));
 
         return new EquipmentResponse(
@@ -88,7 +88,7 @@ public class EquipmentService {
     @Transactional
     public EquipmentEntity updateEquipment(Long equipmentId, EquipmentUpdateRequest equipmentUpdateRequest) {
 
-        EquipmentEntity equipmentEntity = equipmentRepository.findByEquipmentIdOptional(equipmentId)
+        EquipmentEntity equipmentEntity = equipmentRepository.findByEquipmentId(equipmentId)
                 .orElseThrow(() -> new RuntimeException("기존 해당 장비 정보가 없습니다."));
 
         if(!equipmentUpdateRequest.getEquipmentName().isBlank()
@@ -117,7 +117,7 @@ public class EquipmentService {
     @Transactional
     public EquipmentResponse deleteEquipment(Long equipmentId) {
 
-        EquipmentEntity equipmentEntity = equipmentRepository.findByEquipmentIdOptional(equipmentId)
+        EquipmentEntity equipmentEntity = equipmentRepository.findByEquipmentId(equipmentId)
                 .orElseThrow(() -> new RuntimeException("해당 장비 정보가 없습니다."));
 
         EquipmentResponse deletedEquipment = new EquipmentResponse(

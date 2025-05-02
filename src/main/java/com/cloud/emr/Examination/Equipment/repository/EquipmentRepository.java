@@ -10,9 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface EquipmentRepository extends JpaRepository<EquipmentEntity, Long> {
-    EquipmentEntity findByEquipmentId(Long equipmentId);
-
-    Optional<EquipmentEntity> findByEquipmentIdOptional(Long equipmentId);
+    Optional<EquipmentEntity> findByEquipmentId(Long equipmentId);
 
     List<EquipmentEntity> findAllByEquipmentName(String equipmentName);
 }

@@ -28,7 +28,7 @@ import java.util.Date;
 public class TreatmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "treatment_id", nullable = false)
+    @Column(name = "treatment_id", nullable = false, columnDefinition = "INT")
     private Long treatmentId;
 
     @Column(name = "treatment_status")

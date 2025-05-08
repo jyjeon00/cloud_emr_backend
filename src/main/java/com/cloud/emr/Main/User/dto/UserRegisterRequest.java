@@ -72,7 +72,7 @@ public class UserRegisterRequest {
         return UserEntity.builder()
                 // .hospitalCode(this.userHospitalCode)
                 .userDeptName(this.userDepartmentName)
-                .Role(RoleType.WAIT) //우선 WAIT로 진행
+                .role(RoleType.WAIT) //우선 WAIT로 진행
                 .userLoginId(this.userLoginId)
                 .userPassword(this.userPassword1) // 비밀번호는 userPassword1을 사용
                 .userName(this.userName)

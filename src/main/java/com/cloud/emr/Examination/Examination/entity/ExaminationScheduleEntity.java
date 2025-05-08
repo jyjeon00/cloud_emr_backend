@@ -34,19 +34,19 @@ public class ExaminationScheduleEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "examination_id", referencedColumnName = "examination_id", nullable = false)
-    private ExaminationEntity ExaminationEntity;
+    private ExaminationEntity examinationEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_no", referencedColumnName = "patient_no", nullable = false)
     private PatientEntity patientEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "treatment_id", referencedColumnName = "treatment_id", nullable = false, columnDefinition = "INT")
-    private TreatmentEntity TreatmentEntity;
+    @JoinColumn(name = "treatment_id", referencedColumnName = "treatment_id", nullable = false)
+    private TreatmentEntity treatmentEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
-    private UserEntity UserEntity;
+    private UserEntity userEntity;
 
     @Column(name = "examination_Date")
     @JsonFormat(pattern = "yyyy-MM-dd")

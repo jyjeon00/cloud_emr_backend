@@ -1,6 +1,5 @@
 package com.cloud.emr.Examination.Examination.service;
 
-import com.cloud.emr.Affair.Patient.entity.PatientEntity;
 import com.cloud.emr.Examination.Equipment.entity.EquipmentEntity;
 import com.cloud.emr.Examination.Equipment.repository.EquipmentRepository;
 import com.cloud.emr.Examination.Examination.dto.ExaminationRegisterRequest;
@@ -9,7 +8,6 @@ import com.cloud.emr.Examination.Examination.dto.ExaminationUpdateRequest;
 import com.cloud.emr.Examination.Examination.entity.ExaminationEntity;
 import com.cloud.emr.Examination.Examination.repository.ExaminationRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class ExaminationService {
-    
+
     private final ExaminationRepository examinationRepository;
 
     private final EquipmentRepository equipmentRepository;
@@ -33,7 +31,8 @@ public class ExaminationService {
         EquipmentEntity foundEquipment = null;
 
         if (examinationRegisterRequest.getEquipmentId() != null) {
-            foundEquipment = equipmentRepository.findByEquipmentId(examinationRegisterRequest.getEquipmentId());
+            foundEquipment = equipmentRepository.findByEquipmentId(examinationRegisterRequest.getEquipmentId())
+                    .orElseThrow(() -> new IllegalArgumentException("Equipment not found"));
         }
 
         ExaminationEntity examinationEntity = ExaminationEntity.builder()
@@ -50,7 +49,7 @@ public class ExaminationService {
 
     public ExaminationResponse readExamination(Long examinationId) {
 
-        Optional<ExaminationEntity> examinationEntityOptional = examinationRepository.findByExaminationIdOptional(examinationId);
+        Optional<ExaminationEntity> examinationEntityOptional = examinationRepository.findByExaminationId(examinationId);
 
         if (examinationEntityOptional.isPresent()) {
             ExaminationEntity examinationEntity = examinationEntityOptional.get();
@@ -71,7 +70,7 @@ public class ExaminationService {
 
     public List<ExaminationResponse> readExaminationByEuipmentId(Long equipmentID) {
 
-        EquipmentEntity foundEquipment = equipmentRepository.findByEquipmentIdOptional(equipmentID)
+        EquipmentEntity foundEquipment = equipmentRepository.findByEquipmentId(equipmentID)
                 .orElseThrow(() -> new RuntimeException("해당 장비 정보가 없습니다."));
 
         List<ExaminationEntity> examinationEntities = examinationRepository.findAllByEquipmentEntity(foundEquipment);
@@ -111,7 +110,7 @@ public class ExaminationService {
     @Transactional
     public ExaminationEntity updateExamination(Long examinationId, ExaminationUpdateRequest examinationUpdateRequest) {
 
-        Optional<ExaminationEntity> examinationEntityOptional = examinationRepository.findByExaminationIdOptional(examinationId);
+        Optional<ExaminationEntity> examinationEntityOptional = examinationRepository.findByExaminationId(examinationId);
 
         if (examinationEntityOptional.isPresent()) {
             EquipmentEntity foundEquipment = null;
@@ -119,12 +118,12 @@ public class ExaminationService {
             Long equipmentId = examinationEntityOptional.get().getEquipmentEntity().getEquipmentId();
 
             if (equipmentId != null) {
-                foundEquipment = equipmentRepository.findByEquipmentIdOptional(equipmentId)
+                foundEquipment = equipmentRepository.findByEquipmentId(equipmentId)
                         .orElseThrow(() -> new RuntimeException("기존 해당 장비 정보가 없습니다."));
             }
 
             if (examinationUpdateRequest.getEquipmentId() != null) {
-                foundEquipment = equipmentRepository.findByEquipmentIdOptional(examinationUpdateRequest.getEquipmentId())
+                foundEquipment = equipmentRepository.findByEquipmentId(examinationUpdateRequest.getEquipmentId())
                         .orElseThrow(() -> new RuntimeException("갱신하려는 해당 장비 정보가 없습니다."));
             }
 
@@ -146,8 +145,8 @@ public class ExaminationService {
     @Transactional
     public ExaminationResponse deleteExamination(Long examinationID) {
 
-        ExaminationEntity examinationEntity = examinationRepository.findByExaminationIdOptional(examinationID)
-                          .orElseThrow(() -> new RuntimeException("해당 검사 정보가 없습니다."));
+        ExaminationEntity examinationEntity = examinationRepository.findByExaminationId(examinationID)
+                .orElseThrow(() -> new RuntimeException("해당 검사 정보가 없습니다."));
 
         ExaminationResponse deletedExamination = new ExaminationResponse(
                 examinationEntity.getExaminationId(),

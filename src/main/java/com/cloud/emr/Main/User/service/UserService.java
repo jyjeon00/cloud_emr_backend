@@ -37,4 +37,5 @@ public class UserService {
         // 데이터베이스에 저장
         return userRepository.save(userEntity);
     }
+
 }

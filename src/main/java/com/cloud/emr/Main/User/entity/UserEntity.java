@@ -24,7 +24,7 @@ public class UserEntity {
 
     @Column(length = 10)
     @Enumerated(EnumType.STRING)
-    private RoleType Role;
+    private RoleType role;
 
     //음..? 일단 만들어 다듬어만 드릴게요  - 최경태
     @Column(name = "user_login_id")

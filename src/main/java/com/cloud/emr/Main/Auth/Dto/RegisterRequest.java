@@ -1,7 +1,8 @@
-package com.cloud.emr.Main.User.dto;
+package com.cloud.emr.Main.Auth.Dto;
 
 import com.cloud.emr.Main.User.entity.UserEntity;
-import com.cloud.emr.Main.User.status.RoleType;
+import com.cloud.emr.Main.User.type.Gender;
+import com.cloud.emr.Main.User.type.RoleType;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 
@@ -9,7 +10,7 @@ import lombok.Getter;
 import java.time.LocalDate;
 
 @Getter
-public class UserRegisterRequest {
+public class RegisterRequest {
 
     /*
     @Enumerated(EnumType.STRING)
@@ -18,42 +19,39 @@ public class UserRegisterRequest {
      */
 
     @NotEmpty(message = "부서명은 필수항목입니다.")
-    private String userDepartmentName;
+    private String departmentName;
 
     @NotEmpty(message = "이름은 필수항목입니다.")
-    private String userName;
+    private String name;
 
-    @NotEmpty(message = "성별은 필수항목입니다.")
-    private String userGender;
+    @NotNull(message = "성별은 필수항목입니다.")
+    private Gender gender;
 
     @Size(max = 25, min = 3)
     @NotEmpty(message = "아이디는 필수항목입니다.")
-    private String userLoginId;
+    private String loginId;
 
     @Size(min = 8, max = 16, message = "비밀번호는 8자 이상 16자 이하이어야 합니다.")
     @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{8,16}$", message = "비밀번호는 영문 대소문자, 숫자 또는 특수문자 중 2가지 이상 조합, 8자 이상 16자 이하로 설정해야 합니다.")
     @NotEmpty(message = "비밀번호는 필수항목입니다.")
-    private String userPassword1;
-
-    @NotEmpty(message = "비밀번호 확인은 필수항목입니다.")
-    private String userPassword2;
+    private String password;
 
     @NotEmpty(message = "주소는 필수항목입니다.")
-    private String userAddress;
+    private String address;
 
     @NotEmpty(message = "이메일은 필수항목입니다.")
     @Email(message = "유효한 이메일을 입력해주세요.")
-    private String userEmail;
+    private String email;
 
     @NotEmpty(message = "휴대폰 번호는 필수항목입니다.")
     @Pattern(regexp = "^01[0-9]-[0-9]{4}-[0-9]{4}$", message = "핸드폰 번호의 양식을 확인해주세요. 예: 010-1234-5678")
-    private String userTel;
+    private String telNum;
 
     @NotNull(message = "생년월일은 필수항목입니다.")
-    private LocalDate userBirth;
+    private LocalDate birth;
 
     @NotNull(message = "입사일은 필수항목입니다.")
-    private LocalDate userHireDate;
+    private LocalDate hireDate;
 
     // userRegisterDate는 엔티티에서 자동으로 생성
 
@@ -64,24 +62,20 @@ public class UserRegisterRequest {
      * @return : UserEntity
      */
     public UserEntity toUserEntity() {
-        // 프론트 단에서 일단 검증 했더라도
-        if (!userPassword1.equals(userPassword2)) {
-            throw new IllegalArgumentException("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-        }
 
         return UserEntity.builder()
                 // .hospitalCode(this.userHospitalCode)
-                .userDeptName(this.userDepartmentName)
+                .deptName(this.departmentName)
                 .role(RoleType.WAIT) //우선 WAIT로 진행
-                .userLoginId(this.userLoginId)
-                .userPassword(this.userPassword1) // 비밀번호는 userPassword1을 사용
-                .userName(this.userName)
-                .userGender(this.userGender)
-                .userAddress(this.userAddress)
-                .userEmail(this.userEmail)
-                .userTel(this.userTel)
-                .userBirth(this.userBirth.atStartOfDay()) // LocalDate로부터 LocalDateTime으로 변환
-                .userHireDate(this.userHireDate.atStartOfDay()) // LocalDate로부터 LocalDateTime으로 변환
+                .loginId(this.loginId)
+                .password(this.password)
+                .name(this.name)
+                .gender(this.gender)
+                .address(this.address)
+                .email(this.email)
+                .telNum(this.telNum)
+                .birth(this.birth.atStartOfDay()) // LocalDate로부터 LocalDateTime으로 변환
+                .hireDate(this.hireDate.atStartOfDay()) // LocalDate로부터 LocalDateTime으로 변환
                 .build();
     }
 

@@ -11,9 +11,7 @@ import java.util.Optional;
 @Repository
 public interface ExaminationRepository extends JpaRepository<ExaminationEntity, Long> {
 
-    Optional<ExaminationEntity> findByExaminationIdOptional(Long examinationId);
-
-    ExaminationEntity findByExaminationId(Long examinationId);
+    Optional<ExaminationEntity> findByExaminationId(Long examinationId);
 
     ExaminationEntity findByExaminationName(String examinationName);
 

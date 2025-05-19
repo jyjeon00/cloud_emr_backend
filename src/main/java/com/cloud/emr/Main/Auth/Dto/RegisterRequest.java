@@ -1,5 +1,8 @@
 package com.cloud.emr.Main.Auth.Dto;
 
+
+import com.cloud.emr.Main.Department.entity.DepartmentEntity;
+
 import com.cloud.emr.Main.User.entity.UserEntity;
 import com.cloud.emr.Main.User.type.Gender;
 import com.cloud.emr.Main.User.type.RoleType;
@@ -18,8 +21,10 @@ public class RegisterRequest {
     private HospitalCode userHospitalCode;
      */
 
-    @NotEmpty(message = "부서명은 필수항목입니다.")
-    private String departmentName;
+
+    @NotEmpty(message = "부서는 필수항목입니다.")
+    private long department;
+
 
     @NotEmpty(message = "이름은 필수항목입니다.")
     private String name;
@@ -61,11 +66,11 @@ public class RegisterRequest {
      * @exception IllegalArgumentException : 비밀번호와 비밀번호 확인이 일치하지 않을 경우 예외 반환
      * @return : UserEntity
      */
-    public UserEntity toUserEntity() {
-
-        return UserEntity.builder()
+    public UserEntity toUserEntity(DepartmentEntity departmentEntity) {
+         return UserEntity.builder()
                 // .hospitalCode(this.userHospitalCode)
-                .deptName(this.departmentName)
+                .department(departmentEntity)
+
                 .role(RoleType.WAIT) //우선 WAIT로 진행
                 .loginId(this.loginId)
                 .password(this.password)

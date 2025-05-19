@@ -1,5 +1,7 @@
 package com.cloud.emr.Main.User.entity;
 
+import com.cloud.emr.Main.Department.entity.DepartmentEntity;
+
 import com.cloud.emr.Main.User.type.Gender;
 import com.cloud.emr.Main.User.type.RoleType;
 import jakarta.persistence.*;
@@ -38,9 +40,9 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private HospitalCode hospitalCode;
     */
-
-    private String deptName;
-
+    @OneToOne
+    @JoinColumn(name = "id")
+    private DepartmentEntity department;
 
     private String name;
     private Gender gender;
@@ -60,5 +62,7 @@ public class UserEntity {
     public void setUserPassword(String Password) {
         this.password = Password;
     }
+
+    public void setRole(RoleType role) {this.role = role;}
 
 }

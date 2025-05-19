@@ -4,6 +4,10 @@ import com.cloud.emr.Main.Auth.Dto.TokenResponse;
 import com.cloud.emr.Main.Core.Jwt.JwtUtil;
 import com.cloud.emr.Main.Auth.Dto.LoginRequest;
 import com.cloud.emr.Main.Auth.Dto.RegisterRequest;
+
+import com.cloud.emr.Main.Department.entity.DepartmentEntity;
+import com.cloud.emr.Main.Department.repository.DepartmentRepository;
+
 import com.cloud.emr.Main.User.entity.UserEntity;
 import com.cloud.emr.Main.User.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +23,8 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
+    private final DepartmentRepository departmentRepository;
+
 
     public void register(RegisterRequest userRegisterRequest) {
 
@@ -27,8 +33,13 @@ public class AuthService {
             throw new IllegalArgumentException("이미 사용 중인 계정입니다.");
         }
 
+        DepartmentEntity department =  departmentRepository
+                .findById(userRegisterRequest.getDepartment())
+                .orElseThrow(()-> new IllegalArgumentException("부서가 존재하지 않습니다."));
+
         // DTO에서 Entity로 변환
-        UserEntity userEntity = userRegisterRequest.toUserEntity();
+        UserEntity userEntity = userRegisterRequest.toUserEntity(department);
+
         userEntity.setUserPassword(passwordEncoder.encode(userEntity.getPassword()));
 
         // 데이터베이스에 저장
@@ -50,8 +61,7 @@ public class AuthService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        TokenResponse tokenResponse = jwtUtil.generateTokens(user.getId());
+        return jwtUtil.generateTokens(user);
 
-        return tokenResponse;
     }
 }

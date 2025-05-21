@@ -7,6 +7,6 @@ spring:
       on-profile: example  # example 프로필이 활성화되었을 때만 적용됨
 
   datasource:
-    url: jdbc:mysql://localhost:3306/~~~~  # 프로덕션용 데이터베이스 URL
-    username: ~~~~  # 프로덕션용 데이터베이스 사용자명
-    password: ~~~~  # 프로덕션용 데이터베이스 비밀번호
+    url: jdbc:mysql://localhost:3306/emr  # 프로덕션용 데이터베이스 URL
+    username: root  # 프로덕션용 데이터베이스 사용자명
+    password: 1234  # 프로덕션용 데이터베이스 비밀번호

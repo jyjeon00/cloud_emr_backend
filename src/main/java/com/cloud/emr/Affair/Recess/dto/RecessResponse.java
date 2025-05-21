@@ -3,6 +3,7 @@ package com.cloud.emr.Affair.Recess.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +19,6 @@ public class RecessResponse {
     private LocalDateTime recessStart;
     private LocalDateTime recessEnd;
     private String recessReason;
-    private LocalDateTime createdAt;
+    private LocalDateTime recessCreate;
 
 }

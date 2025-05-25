@@ -1,10 +1,11 @@
 package com.cloud.emr.Affair.Recess.dto;
 
+import com.cloud.emr.Affair.Recess.entity.RecessEntity;
+import com.cloud.emr.Main.User.entity.UserEntity;
+import com.cloud.emr.Main.User.type.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.LocalDateTime;
 
 @Getter
@@ -12,13 +13,23 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class RecessResponse {
 
-    private Long id;
     private Long userId;
-    private String userName;
-    private String role;
+    private RoleType role;
     private LocalDateTime recessStart;
     private LocalDateTime recessEnd;
     private String recessReason;
     private LocalDateTime recessCreate;
 
+    public static RecessResponse from(RecessEntity entity) {
+        UserEntity user = entity.getUserEntity();
+
+        return new RecessResponse(
+                user.getId(),
+                user.getRole(),
+                entity.getRecessStart(),
+                entity.getRecessEnd(),
+                entity.getRecessReason(),
+                entity.getRecessCreate()
+        );
+    }
 }

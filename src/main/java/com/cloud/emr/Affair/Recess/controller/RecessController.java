@@ -22,7 +22,7 @@ public class RecessController {
     private final RecessService service;
 
     // 1. 휴진 등록
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> register(
             @RequestBody RecessRequest recessRequest, @AuthUser UserEntity user) {
 
@@ -37,7 +37,7 @@ public class RecessController {
 
 
     // 2. 휴진 수정
-    @PutMapping("/{id}")
+    @PostMapping("/update/{id}")
     public ResponseEntity<Map<String, Object>> update(
             @PathVariable Long id, @RequestBody RecessRequest recessRequest, @AuthUser UserEntity user) {
 
@@ -52,7 +52,7 @@ public class RecessController {
 
 
     // 3. 휴진 삭제
-    @DeleteMapping("/{id}")
+    @PostMapping("/delete/{id}")
     public ResponseEntity<Map<String, Object>> delete(
             @PathVariable Long id, @AuthUser UserEntity user) {
 
@@ -66,7 +66,7 @@ public class RecessController {
 
 
     // 4. 휴진 목록 조회
-    @GetMapping
+    @PostMapping("/list")
     public ResponseEntity<Map<String, Object>> list(
             @RequestParam RoleType role, @AuthUser UserEntity user) {
 

@@ -5,7 +5,6 @@ import com.cloud.emr.Affair.Recess.dto.RecessResponse;
 import com.cloud.emr.Affair.Recess.entity.RecessEntity;
 import com.cloud.emr.Affair.Recess.repository.RecessRepository;
 import com.cloud.emr.Main.User.entity.UserEntity;
-import com.cloud.emr.Main.User.service.UserService;
 import com.cloud.emr.Main.User.type.RoleType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 public class RecessService {
 
     private final RecessRepository recessRepository;
-    private final UserService userService;
 
     /** 1. 휴진 등록 **/
     @Transactional

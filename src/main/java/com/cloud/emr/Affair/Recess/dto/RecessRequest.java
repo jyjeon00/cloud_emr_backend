@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class RecessRequest {
 
-    private RoleType Role; // DOCTOR 또는 STAFF
     private LocalDateTime recessStart;
     private LocalDateTime recessEnd;
     private String recessReason;

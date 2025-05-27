@@ -58,7 +58,7 @@ public class RecessController {
 
         service.deleteRecess(user, id);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Map.of(
+        return ResponseEntity.ok(Map.of(
                 "message", "휴진 삭제 성공"
         ));
     }
@@ -66,14 +66,12 @@ public class RecessController {
 
 
     // 4. 휴진 목록 조회
-    @PostMapping("/list")
-    public ResponseEntity<Map<String, Object>> list(
-            @RequestParam RoleType role, @AuthUser UserEntity user) {
-
-        List<RecessResponse> list = service.listByRole(user, role);
+    @GetMapping("/list")
+    public ResponseEntity<Map<String, Object>> list(@AuthUser UserEntity user) {
+        List<RecessResponse> list = service.listByRole(user, user.getRole());
 
         if (list.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Map.of(
+            return ResponseEntity.ok(Map.of(
                     "message", "조회된 휴진이 없습니다."
             ));
         }
@@ -83,5 +81,6 @@ public class RecessController {
                 "data", list
         ));
     }
+
 
 }

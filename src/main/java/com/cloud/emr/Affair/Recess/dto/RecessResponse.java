@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class RecessResponse {
 
+    private Long id;           // 휴진 ID 추가
     private Long userId;
     private RoleType role;
     private LocalDateTime recessStart;
@@ -24,6 +25,7 @@ public class RecessResponse {
         UserEntity user = entity.getUserEntity();
 
         return new RecessResponse(
+                entity.getId(),
                 user.getId(),
                 user.getRole(),
                 entity.getRecessStart(),

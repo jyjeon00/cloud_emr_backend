@@ -25,7 +25,7 @@ public class RecessService {
     public RecessResponse registerRecess(UserEntity user, RecessRequest recessRequest) {
         validateTimeSlot(recessRequest.getRecessStart(), recessRequest.getRecessEnd());
 
-        if (user.getRole() != recessRequest.getRole()) {
+        if (user.getRole() != user.getRole()) {
             throw new RuntimeException("사용자의 역할이 일치하지 않습니다.");
         }
 
@@ -57,7 +57,7 @@ public class RecessService {
             throw new RuntimeException("본인의 휴진 정보만 수정할 수 있습니다.");
         }
 
-        if (user.getRole() != recessRequest.getRole()) {
+        if (user.getRole() != user.getRole()) {
             throw new RuntimeException("사용자의 역할이 일치하지 않습니다.");
         }
 

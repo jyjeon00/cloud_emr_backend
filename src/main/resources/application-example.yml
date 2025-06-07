@@ -1,5 +1,5 @@
 # application-example.yml 예시 양식입니다.
-# pplication-dev.yml 는 뭐 실수로 올려도 되나 application-prod.yml는 올리지마세요.
+# application-dev.yml 는 뭐 실수로 올려도 되나 application-prod.yml는 올리지마세요.
 
 spring:
   config:

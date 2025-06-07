@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -144,7 +145,7 @@ public class RecessService {
         } else {
             // 수정 시에는 자기 자신 제외하고 겹치는 휴진이 있으면 conflict true
             conflict = overlapping.stream()
-                    .anyMatch(r -> !r.getId().equals(excludeRecessId));
+                    .anyMatch(r -> !Objects.equals(r.getId(), excludeRecessId));
         }
 
         if (conflict) {

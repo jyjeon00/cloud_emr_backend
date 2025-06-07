@@ -20,6 +20,7 @@ public class RecessResponse {
     private LocalDateTime recessEnd;
     private String recessReason;
     private LocalDateTime recessCreate;
+    private LocalDateTime recessUpdate;
 
     public static RecessResponse from(RecessEntity entity) {
         UserEntity user = entity.getUserEntity();
@@ -31,7 +32,8 @@ public class RecessResponse {
                 entity.getRecessStart(),
                 entity.getRecessEnd(),
                 entity.getRecessReason(),
-                entity.getRecessCreate()
+                entity.getRecessCreate(),
+                entity.getRecessUpdate()
         );
     }
 }

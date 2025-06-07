@@ -23,14 +23,13 @@ public class RecessService {
     /** 1. 휴진 등록 **/
     @Transactional
     public RecessResponse registerRecess(UserEntity user, RecessRequest recessRequest) {
-        validateTimeSlot(recessRequest.getRecessStart(), recessRequest.getRecessEnd());
+        checkTimeRange(recessRequest.getRecessStart(), recessRequest.getRecessEnd());
 
-        if (user.getRole() != user.getRole()) {
-            throw new RuntimeException("사용자의 역할이 일치하지 않습니다.");
-        }
+        LocalDateTime start = roundTimeRange(recessRequest.getRecessStart());
+        LocalDateTime end = roundTimeRange(recessRequest.getRecessEnd());
 
-        LocalDateTime start = adjustToHalfHour(recessRequest.getRecessStart());
-        LocalDateTime end = adjustToHalfHour(recessRequest.getRecessEnd());
+        // 등록 시 (새 휴진이므로 ID 없음)
+        checkDupeRecess(user, start, end, null);
 
         RecessEntity recessEntity = RecessEntity.builder()
                 .userEntity(user)
@@ -48,7 +47,7 @@ public class RecessService {
     /** 2. 휴진 수정 **/
     @Transactional
     public RecessResponse updateRecess(UserEntity user, Long recessId, RecessRequest recessRequest) {
-        validateTimeSlot(recessRequest.getRecessStart(), recessRequest.getRecessEnd());
+        checkTimeRange(recessRequest.getRecessStart(), recessRequest.getRecessEnd());
 
         RecessEntity recessEntity = recessRepository.findById(recessId)
                 .orElseThrow(() -> new RuntimeException("휴진 정보를 찾을 수 없습니다."));
@@ -57,12 +56,11 @@ public class RecessService {
             throw new RuntimeException("본인의 휴진 정보만 수정할 수 있습니다.");
         }
 
-        if (user.getRole() != user.getRole()) {
-            throw new RuntimeException("사용자의 역할이 일치하지 않습니다.");
-        }
+        LocalDateTime start = roundTimeRange(recessRequest.getRecessStart());
+        LocalDateTime end = roundTimeRange(recessRequest.getRecessEnd());
 
-        LocalDateTime start = adjustToHalfHour(recessRequest.getRecessStart());
-        LocalDateTime end = adjustToHalfHour(recessRequest.getRecessEnd());
+        // 수정 시 (기존 휴진 ID를 고려)
+        checkDupeRecess(user, start, end, recessId);
 
         RecessEntity updated = RecessEntity.builder()
                 .id(recessEntity.getId())
@@ -70,6 +68,8 @@ public class RecessService {
                 .recessStart(start)
                 .recessEnd(end)
                 .recessReason(recessRequest.getRecessReason())
+                .recessCreate(recessEntity.getRecessCreate())
+                .recessUpdate(LocalDateTime.now())
                 .build();
 
         recessRepository.save(updated);
@@ -96,6 +96,7 @@ public class RecessService {
     /** 4. 휴진 목록 조회 **/
     @Transactional(readOnly = true)
     public List<RecessResponse> listByRole(UserEntity user, RoleType role) {
+
         if (user.getRole() != role) {
             throw new RuntimeException("조회 권한이 없습니다.");
         }
@@ -105,7 +106,14 @@ public class RecessService {
                 .collect(Collectors.toList());
     }
 
-    private void validateTimeSlot(LocalDateTime startTime, LocalDateTime endTime) {
+
+
+
+
+    /** 내부 유틸 함수 **/
+
+    // 시작-종료 시간 유효성 검사
+    private void checkTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
         if (startTime.getMinute() % 30 != 0 || endTime.getMinute() % 30 != 0) {
             throw new IllegalArgumentException("시간은 반드시 30분 단위여야 합니다.");
         }
@@ -114,10 +122,38 @@ public class RecessService {
         }
     }
 
-    private LocalDateTime adjustToHalfHour(LocalDateTime time) {
+    //입력 시간을 30분 단위로 반올림
+    private LocalDateTime roundTimeRange(LocalDateTime time) {
         int minute = time.getMinute();
         int adjustedMinute = (minute < 30) ? 0 : 30;
         return time.withMinute(adjustedMinute).withSecond(0).withNano(0);
     }
 
+    // 중복 휴진 체크 함수 (근데 이게 콘솔에 java.lang.IllegalArgumentException: 같은 역할군 내에 겹치는 휴진이 존재합니다. 이런식으로 뜨고 postman에선 403이라 맞는진 모르겠음)
+    private void checkDupeRecess(UserEntity user, LocalDateTime start, LocalDateTime end, Long excludeRecessId) {
+        RoleType role = user.getRole();
+
+        // 동일 역할을 가진 휴진들 중에 겹치는 시간이 있는지 조회
+        List<RecessEntity> overlapping = recessRepository.findByUserEntity_RoleAndRecessEndAfterAndRecessStartBefore(
+                role, start, end);
+
+        boolean conflict;
+        if (excludeRecessId == null) {
+            // 새 휴진 등록 시에는 겹치는 휴진이 하나라도 있으면 conflict true
+            conflict = !overlapping.isEmpty();
+        } else {
+            // 수정 시에는 자기 자신 제외하고 겹치는 휴진이 있으면 conflict true
+            conflict = overlapping.stream()
+                    .anyMatch(r -> !r.getId().equals(excludeRecessId));
+        }
+
+        if (conflict) {
+            throw new IllegalArgumentException("같은 역할군 내에 겹치는 휴진이 존재합니다.");
+        }
+    }
+
 }
+
+
+
+

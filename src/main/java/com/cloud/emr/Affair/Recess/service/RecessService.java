@@ -138,15 +138,9 @@ public class RecessService {
         List<RecessEntity> overlapping = recessRepository.findByUserEntity_RoleAndRecessEndAfterAndRecessStartBefore(
                 role, start, end);
 
-        boolean conflict;
-        if (excludeRecessId == null) {
-            // 새 휴진 등록 시에는 겹치는 휴진이 하나라도 있으면 conflict true
-            conflict = !overlapping.isEmpty();
-        } else {
-            // 수정 시에는 자기 자신 제외하고 겹치는 휴진이 있으면 conflict true
-            conflict = overlapping.stream()
-                    .anyMatch(r -> !Objects.equals(r.getId(), excludeRecessId));
-        }
+        // Objects.equals(a, b)는 null일 때의 분기를 따로 나누지 않아도 안전하게 비교가 가능해서 코드가 간결해진다.
+        boolean conflict = overlapping.stream()
+                .anyMatch(r -> !Objects.equals(r.getId(), excludeRecessId));
 
         if (conflict) {
             throw new IllegalArgumentException("같은 역할군 내에 겹치는 휴진이 존재합니다.");

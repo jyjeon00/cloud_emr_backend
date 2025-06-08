@@ -130,7 +130,7 @@ public class RecessService {
         return time.withMinute(adjustedMinute).withSecond(0).withNano(0);
     }
 
-    // 중복 휴진 체크 함수 (근데 이게 콘솔에 java.lang.IllegalArgumentException: 같은 역할군 내에 겹치는 휴진이 존재합니다. 이런식으로 뜨고 postman에선 403이라 맞는진 모르겠음)
+    // 중복 휴진 체크 함수 (예외처리라서 403뜨고 콘솔에서 자세한 내용 출력됨)
     private void checkDupeRecess(UserEntity user, LocalDateTime start, LocalDateTime end, Long excludeRecessId) {
         RoleType role = user.getRole();
 
